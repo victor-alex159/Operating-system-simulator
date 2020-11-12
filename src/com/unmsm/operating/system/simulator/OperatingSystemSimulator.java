@@ -5,8 +5,8 @@ import com.unmsm.operating.system.simulator.controllers.ConfigController;
 import com.unmsm.operating.system.simulator.controllers.LoginController;
 import com.unmsm.operating.system.simulator.controllers.AdminController;
 import com.unmsm.operating.system.simulator.controllers.UserController;
-import com.unmsm.operating.system.simulator.model.User;
 import com.unmsm.operating.system.simulator.jframes.LoginFrame;
+import com.unmsm.operating.system.simulator.model.User;
 
 public class OperatingSystemSimulator {
 
@@ -40,8 +40,8 @@ public class OperatingSystemSimulator {
         //System.out.println("Pasword: " + userController.getPassword());
         //System.out.println("Rol: " + userController.getRol()); // por ahora solo 2 roles: user y admin(solo uno)
         
-        LoginFrame loginFrame = new LoginFrame();
-        loginFrame.setVisible(true);
+         LoginFrame loginFrame = new LoginFrame();
+         loginFrame.setVisible(true);
     }
     
 }
