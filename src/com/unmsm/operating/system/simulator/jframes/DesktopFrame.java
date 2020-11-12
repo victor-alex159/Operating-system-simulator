@@ -1,0 +1,290 @@
+
+package com.unmsm.operating.system.simulator.jframes;
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Point;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+public class DesktopFrame extends javax.swing.JFrame {
+    
+    ExplorerFrame explorer = new ExplorerFrame();
+    private Point mousePoint;
+    
+
+    /**
+     * Creates new form DesktopFrame
+     */
+    public DesktopFrame() {
+        initComponents();
+        Date hour = new Date();
+        Date date = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("hh:mm a");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        hourNow.setText(hourFormat.format(hour));
+        dateNow.setText(dateFormat.format(date));
+        showExplorer();
+        showIcon();
+    }
+    
+    public void showExplorer() {
+        iconMyPc.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                    explorer.setVisible(true);
+                    explorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    JFrame frame = new JFrame();
+                    JPanel panel = new JPanel();
+                    JButton open = new JButton();
+                    JButton delete = new JButton();
+                    JButton copy = new JButton();
+                    Map<String, JButton> map = new HashMap<>();
+                    map.put("Abrir", open);
+                    map.put("Eliminar", delete);
+                    map.put("Copiar", copy);
+                    showWindowEdit(map);
+                    
+                    open.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            explorer.setVisible(true);
+                            frame.setVisible(false);
+                            explorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                        }
+                    });
+                }  
+            }
+            
+        });
+    }
+    
+    public void bodyDesktopConf() {
+        bodyDesktop.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    JButton addImage = new JButton();
+                    JButton copy = new JButton();
+                    JButton create = new JButton();
+                    Map<String, JButton> map = new HashMap<>();
+                    map.put("Agregar fondo", addImage);
+                    map.put("Copiar", copy);
+                    map.put("Crear arhivo", create);
+                    showWindowEdit(map);
+                }
+            }
+        });
+    }
+    
+    public void showWindowEdit(Map<String, JButton> button) {
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        JPanel panel = new JPanel();
+        button.entrySet().forEach((btn) -> {
+            btn.getValue().setText(btn.getKey());
+            panel.add(btn.getValue());
+        });
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.setPreferredSize(new Dimension(100, 100));
+        panel.setMaximumSize(new Dimension(100, 100));
+        frame.getContentPane().add(panel);
+        frame.setSize(250, 150);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        
+    }
+    
+    public void showIcon() {
+        addImageIcon("myPc.png"); // Icono Mi Pc
+        
+    }
+    
+    public void addImageIcon(String nameImageIcon) {
+        ImageIcon icon = new ImageIcon("./icons/".concat(nameImageIcon));
+        Image img = icon.getImage();
+        Image imgScale = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(imgScale);
+        iconMyPc.setIcon(scaledIcon);
+    }
+    
+    public void addImagToDesktop() throws IOException {
+        BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        add(picLabel);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        bodyDesktop = new javax.swing.JPanel();
+        taskBar = new javax.swing.JPanel();
+        dateNow = new javax.swing.JLabel();
+        hourNow = new javax.swing.JLabel();
+        startButton = new javax.swing.JButton();
+        iconMyPc = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+
+        taskBar.setBackground(new java.awt.Color(30, 30, 30));
+
+        dateNow.setForeground(new java.awt.Color(255, 255, 255));
+        dateNow.setText("DATENOW");
+
+        hourNow.setForeground(new java.awt.Color(255, 255, 255));
+        hourNow.setText("HOURNOW");
+
+        startButton.setText("INICIO");
+
+        javax.swing.GroupLayout taskBarLayout = new javax.swing.GroupLayout(taskBar);
+        taskBar.setLayout(taskBarLayout);
+        taskBarLayout.setHorizontalGroup(
+            taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, taskBarLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(startButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1095, Short.MAX_VALUE)
+                .addGroup(taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(hourNow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
+        taskBarLayout.setVerticalGroup(
+            taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taskBarLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(startButton)
+                    .addGroup(taskBarLayout.createSequentialGroup()
+                        .addComponent(hourNow, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateNow)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        iconMyPc.setBackground(new java.awt.Color(51, 0, 204));
+        iconMyPc.setText("MI PC");
+        iconMyPc.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconMyPcMouseDragged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
+        bodyDesktop.setLayout(bodyDesktopLayout);
+        bodyDesktopLayout.setHorizontalGroup(
+            bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(taskBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(bodyDesktopLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        bodyDesktopLayout.setVerticalGroup(
+            bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 550, Short.MAX_VALUE)
+                .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bodyDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bodyDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void iconMyPcMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMyPcMouseDragged
+        int x = evt.getX();
+        int y = evt.getY();
+        int xDif = iconMyPc.getLocation().x + x - iconMyPc.getWidth();
+        int yDif = iconMyPc.getLocation().y + y - iconMyPc.getHeight();
+        iconMyPc.setLocation(xDif, yDif);
+    }//GEN-LAST:event_iconMyPcMouseDragged
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DesktopFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bodyDesktop;
+    private javax.swing.JLabel dateNow;
+    private javax.swing.JLabel hourNow;
+    private javax.swing.JLabel iconMyPc;
+    private javax.swing.JButton startButton;
+    private javax.swing.JPanel taskBar;
+    // End of variables declaration//GEN-END:variables
+}
