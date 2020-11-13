@@ -19,10 +19,11 @@
  */
 package com.unmsm.operating.system.simulator.jframes;
 
-import com.sun.glass.events.KeyEvent;
+//import com.sun.glass.events.KeyEvent;
 import com.unmsm.operating.system.simulator.controllers.AdminController;
 import com.unmsm.operating.system.simulator.controllers.LoginController;
 import com.unmsm.operating.system.simulator.controllers.UserController;
+import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -91,10 +92,12 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        containerJPanel.setBackground(new java.awt.Color(255, 204, 255));
+        containerJPanel.setBackground(new java.awt.Color(30, 30, 30));
         containerJPanel.setLayout(new java.awt.GridBagLayout());
 
+        userJLabel.setBackground(new java.awt.Color(255, 255, 255));
         userJLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        userJLabel.setForeground(new java.awt.Color(255, 255, 255));
         userJLabel.setText("Usuario");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -104,7 +107,9 @@ public class LoginFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(33, 63, 0, 0);
         containerJPanel.add(userJLabel, gridBagConstraints);
 
+        passwordJLabel.setBackground(new java.awt.Color(255, 255, 255));
         passwordJLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        passwordJLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordJLabel.setText("Password");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -132,8 +137,8 @@ public class LoginFrame extends javax.swing.JFrame {
         containerJPanel.add(userJTextField, gridBagConstraints);
 
         loginButton.setActionCommand("ingresar");
-        loginButton.setBackground(new java.awt.Color(255, 0, 102));
-        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.setBackground(new java.awt.Color(153, 153, 153));
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setLabel("Ingresar");
         loginButton.setName("ingresar"); // NOI18N
@@ -157,10 +162,10 @@ public class LoginFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 42, 0, 134);
         containerJPanel.add(loginButton, gridBagConstraints);
 
-        returnJButton.setBackground(new java.awt.Color(255, 153, 153));
+        returnJButton.setBackground(new java.awt.Color(153, 153, 153));
         returnJButton.setForeground(new java.awt.Color(255, 255, 255));
         returnJButton.setText("atrás");
-        returnJButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnJButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         returnJButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         returnJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +185,7 @@ public class LoginFrame extends javax.swing.JFrame {
         usersJComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         usersJComboBox.setAlignmentX(CENTER_ALIGNMENT);
         usersJComboBox.setAlignmentY(CENTER_ALIGNMENT);
-        usersJComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        usersJComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         usersJComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 usersJComboBoxItemStateChanged(evt);
@@ -233,7 +238,7 @@ public class LoginFrame extends javax.swing.JFrame {
         containerJPanel.add(iconJLabel, gridBagConstraints);
 
         tittleJLabel.setFont(new java.awt.Font("Yu Gothic Medium", 1, 50)); // NOI18N
-        tittleJLabel.setForeground(new java.awt.Color(255, 0, 102));
+        tittleJLabel.setForeground(new java.awt.Color(255, 255, 255));
         tittleJLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tittleJLabel.setText("Welcome");
         tittleJLabel.setAlignmentX(CENTER_ALIGNMENT);

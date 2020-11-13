@@ -36,6 +36,7 @@ public class DesktopFrame extends javax.swing.JFrame {
      */
     public DesktopFrame() {
         initComponents();
+        this.setExtendedState(DesktopFrame.MAXIMIZED_BOTH);
         Date hour = new Date();
         Date date = new Date();
         DateFormat hourFormat = new SimpleDateFormat("hh:mm a");
@@ -123,6 +124,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     
     public void showIcon() {
         addImageIcon("myPc.png"); // Icono Mi Pc
+        addImageIcon("startWindows.png");
         
     }
     
@@ -131,7 +133,15 @@ public class DesktopFrame extends javax.swing.JFrame {
         Image img = icon.getImage();
         Image imgScale = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(imgScale);
-        iconMyPc.setIcon(scaledIcon);
+        
+        if(nameImageIcon.equals("startWindows.png")) {
+            startButton.setOpaque(false);
+            startButton.setContentAreaFilled(false);
+            startButton.setFocusPainted(false);
+            startButton.setIcon(scaledIcon);
+        } else {
+            iconMyPc.setIcon(scaledIcon);        
+        }
     }
     
     public void addImagToDesktop() throws IOException {
@@ -167,16 +177,20 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow.setForeground(new java.awt.Color(255, 255, 255));
         hourNow.setText("HOURNOW");
 
-        startButton.setText("INICIO");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout taskBarLayout = new javax.swing.GroupLayout(taskBar);
         taskBar.setLayout(taskBarLayout);
         taskBarLayout.setHorizontalGroup(
             taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, taskBarLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(startButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1095, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1107, Short.MAX_VALUE)
                 .addGroup(taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(hourNow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dateNow, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,13 +200,14 @@ public class DesktopFrame extends javax.swing.JFrame {
             taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(taskBarLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(startButton)
+                .addGroup(taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(taskBarLayout.createSequentialGroup()
                         .addComponent(hourNow, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateNow)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(dateNow)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         iconMyPc.setBackground(new java.awt.Color(51, 0, 204));
@@ -218,7 +233,7 @@ public class DesktopFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 550, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
                 .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -243,6 +258,10 @@ public class DesktopFrame extends javax.swing.JFrame {
         int yDif = iconMyPc.getLocation().y + y - iconMyPc.getHeight();
         iconMyPc.setLocation(xDif, yDif);
     }//GEN-LAST:event_iconMyPcMouseDragged
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startButtonActionPerformed
 
     /**
      * @param args the command line arguments
