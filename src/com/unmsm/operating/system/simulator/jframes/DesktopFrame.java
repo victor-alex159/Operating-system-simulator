@@ -4,7 +4,6 @@ package com.unmsm.operating.system.simulator.jframes;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Point;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,7 +27,6 @@ import javax.swing.SwingUtilities;
 public class DesktopFrame extends javax.swing.JFrame {
     
     ExplorerFrame explorer = new ExplorerFrame();
-    private Point mousePoint;
     
 
     /**
@@ -70,7 +68,7 @@ public class DesktopFrame extends javax.swing.JFrame {
                     map.put("Abrir", open);
                     map.put("Eliminar", delete);
                     map.put("Copiar", copy);
-                    showWindowEdit(map);
+                    setWindowEdit(map);
                     
                     open.addMouseListener(new MouseAdapter() {
                         @Override
@@ -98,13 +96,13 @@ public class DesktopFrame extends javax.swing.JFrame {
                     map.put("Agregar fondo", addImage);
                     map.put("Copiar", copy);
                     map.put("Crear arhivo", create);
-                    showWindowEdit(map);
+                    setWindowEdit(map);
                 }
             }
         });
     }
     
-    public void showWindowEdit(Map<String, JButton> button) {
+    public void setWindowEdit(Map<String, JButton> button) {
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
