@@ -91,7 +91,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        containerJPanel.setBackground(new java.awt.Color(255, 204, 255));
+        containerJPanel.setBackground(new java.awt.Color(102, 102, 255));
         containerJPanel.setLayout(new java.awt.GridBagLayout());
 
         userJLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -133,7 +133,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         loginButton.setActionCommand("ingresar");
         loginButton.setBackground(new java.awt.Color(255, 0, 102));
-        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setLabel("Ingresar");
         loginButton.setName("ingresar"); // NOI18N
@@ -160,7 +160,7 @@ public class LoginFrame extends javax.swing.JFrame {
         returnJButton.setBackground(new java.awt.Color(255, 153, 153));
         returnJButton.setForeground(new java.awt.Color(255, 255, 255));
         returnJButton.setText("atrás");
-        returnJButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnJButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         returnJButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         returnJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +180,7 @@ public class LoginFrame extends javax.swing.JFrame {
         usersJComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         usersJComboBox.setAlignmentX(CENTER_ALIGNMENT);
         usersJComboBox.setAlignmentY(CENTER_ALIGNMENT);
-        usersJComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        usersJComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         usersJComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 usersJComboBoxItemStateChanged(evt);
