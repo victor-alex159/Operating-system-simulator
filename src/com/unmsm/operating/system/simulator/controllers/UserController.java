@@ -5,26 +5,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
-import com.unmsm.operating.system.simulator.model.Config;
+import com.unmsm.operating.system.simulator.model.User;
 
 public class UserController {
     
     Properties p = new Properties();
-    private Config config = new Config();
-    private String username;
+    private User user;
+    private String path = "./src/Properties/";
     
-    public UserController(String username) {
-        this.username = username;
-        config.setLocationConfig("./src/Properties/".concat(username).concat("-config.properties"));
+    public UserController(String name) {
+        this.user.setUsername(name);
     }
     
     public String getUsername() {
         String username = "";
         try {
-            p.load(new FileReader(config.getLocationConfig()));
+            p.load(new FileReader(p.getProperty(user.getUsername().concat("-config.properties"))));
             username = p.getProperty("username");
-        } catch (IOException ex) {
-            // JOptionPane.showMessageDialog(null, "Error en lectura" + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en lectura" + ex.getMessage());
         }
         return username;
     }
@@ -32,10 +31,10 @@ public class UserController {
     public String getPassword() {
         String pass = "";
         try {
-            p.load(new FileReader(config.getLocationConfig()));
+            p.load(new FileReader(p.getProperty(user.getUsername().concat("-config.properties"))));
             pass = p.getProperty("password");
-        } catch (IOException ex) {
-            // JOptionPane.showMessageDialog(null, "Error en lectura" + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en lectura" + ex.getMessage());
         }
         return pass;
     }
@@ -43,9 +42,9 @@ public class UserController {
     public String getRol() {
         String rol = "";
         try {
-            p.load(new FileReader(config.getLocationConfig()));
+            p.load(new FileReader(p.getProperty(user.getUsername().concat("-config.properties"))));
             rol = p.getProperty("rol");
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en lectura de credenciales" + ex.getMessage());
         }
         return rol;

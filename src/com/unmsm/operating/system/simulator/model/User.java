@@ -1,6 +1,9 @@
 
 package com.unmsm.operating.system.simulator.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     
     private String username;

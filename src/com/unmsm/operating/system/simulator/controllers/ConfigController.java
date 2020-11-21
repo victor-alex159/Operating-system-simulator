@@ -1,4 +1,3 @@
-
 package com.unmsm.operating.system.simulator.controllers;
 
 import java.io.File;
@@ -7,56 +6,108 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
-import com.unmsm.operating.system.simulator.model.Config;
 import com.unmsm.operating.system.simulator.model.User;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfigController {
+
     Properties p = new Properties();
-    private Config config = new Config();
-    
+    private String path = "./src/Properties/";
+
     public void createDirectory(User user) {
-        config.setLocationDirectory("./src/Properties/".concat(user.getUsername()));
-        File directory = new File(config.getLocationDirectory());
-        if (!directory.exists()) {
-            if (directory.mkdirs()) {
-                // JOptionPane.showMessageDialog(null, "Se añadió");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se puedo completar operación");
+        String ruta = path.concat(user.getUsername());
+        // Properties fileproperties = new Properties();
+        File directory = new File(ruta);
+
+        try {
+            if (!directory.exists()) {
+                if (directory.mkdirs()) {
+                    createPathDirectory(user);
+                    p.load(new FileReader(path.concat(user.getUsername().concat("/").concat(user.getUsername().concat("-path.properties")))));
+                    p.setProperty(user.getUsername(), ruta);
+                    p.store(new FileWriter(path.concat(user.getUsername().concat("/").concat(user.getUsername().concat("-path.properties")))), "File directory created");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo completar la operación");
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el directorio");
         }
     }
-    
-    /**
-     * 
-     * @param file require name plus extension: "txt"
-     */
-    
-    public void createFileConfig(User user) {
-        
+
+    public void createPathDirectory(User user) {
         File fileCreated = null;
-        
-        if(user.getUsername() != null) {
-           String nameFile = user.getUsername().concat("-config").concat(".").concat("properties");
-           config.setLocationConfig(config.getLocationDirectory().concat("/").concat(nameFile));
-           fileCreated = new File(config.getLocationDirectory(), nameFile);
-        }
-        
-        if (!fileCreated.exists()) {
-            try {
+        String nameFile = user.getUsername().concat("-path.properties");
+        String ruta = path.concat(user.getUsername());
+
+        try {
+            if (user.getUsername() != null) {
+                fileCreated = new File(ruta, nameFile);
+            }
+            if (!fileCreated.exists()) {
                 if (fileCreated.createNewFile()) {
-                    
-                    p.load(new FileReader(config.getLocationConfig()));
-                    p.setProperty("rol", user.getRol());
-                    p.setProperty("username", user.getUsername());
-                    p.setProperty("password", user.getPassword());
-                    p.store(new FileWriter(config.getLocationConfig()),"File config created");
-                    // JOptionPane.showMessageDialog(null, "Se añadió");
+                    p.load(new FileReader(path.concat(user.getUsername().concat("/").concat(user.getUsername().concat("-path.properties")))));
+                    p.setProperty(nameFile, ruta.concat("/").concat(user.getUsername()).concat("-path.properties"));
+                    p.store(new FileWriter(path.concat(user.getUsername().concat("/").concat(user.getUsername().concat("-path.properties")))), "File directory created");
                 } else {
                     JOptionPane.showMessageDialog(null, "Error de acceso");
                 }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Error en lectura archivo config" + ex.getMessage());
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error de acceso");
+        }
+    }
+
+    public void createFileConfig(User user) {
+
+        File fileCreated = null;
+        String nameFile = user.getUsername().concat("-config.properties");
+        String ruta = path.concat(user.getUsername().concat("/").concat(nameFile));
+        Properties pconfig = new Properties();
+
+        try {
+            if (user.getUsername() != null) {
+                p.load(new FileReader(p.getProperty(user.getUsername()).concat("/").concat(user.getUsername().concat("-path.properties"))));
+                p.setProperty(nameFile, ruta);
+                p.store(new FileWriter(p.getProperty(user.getUsername()).concat("/").concat(user.getUsername()).concat("-path.properties")), "File path created");
+                fileCreated = new File(p.getProperty(user.getUsername()), nameFile);
+            }
+            if (!fileCreated.exists()) {
+                if (fileCreated.createNewFile()) {
+                    pconfig.load(new FileReader(p.getProperty(nameFile)));
+                    pconfig.setProperty("rol", user.getRol());
+                    pconfig.setProperty("username", user.getUsername());
+                    pconfig.setProperty("password", user.getPassword());
+                    pconfig.store(new FileWriter(p.getProperty(nameFile)), "File config created");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error de acceso");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error no se puedo crear el archivo config");
+        }
+    }
+
+    public void deleteFileConfig(User user) {
+        try {
+            p.load(new FileReader(path.concat(user.getUsername()).concat("/").concat(user.getUsername()).concat("-path.properties")));
+            File fileDeleted = new File(p.getProperty(user.getUsername().concat("-config.properties")));
+
+            if (fileDeleted.exists()) {
+                try {
+                    if (fileDeleted.delete()) {
+                        JOptionPane.showMessageDialog(null, "Se eliminó");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error de eliminación");
+                    }
+                } catch (Error e) {
+                    JOptionPane.showMessageDialog(null, "Error en lectura archivo config" + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en lectura archivo config" + e.getMessage());
         }
     }
 }

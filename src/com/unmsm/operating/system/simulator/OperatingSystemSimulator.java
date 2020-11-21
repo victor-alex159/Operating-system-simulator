@@ -4,9 +4,11 @@ package com.unmsm.operating.system.simulator;
 import com.unmsm.operating.system.simulator.controllers.ConfigController;
 import com.unmsm.operating.system.simulator.controllers.LoginController;
 import com.unmsm.operating.system.simulator.controllers.AdminController;
+import com.unmsm.operating.system.simulator.controllers.FileController;
 import com.unmsm.operating.system.simulator.controllers.UserController;
 import com.unmsm.operating.system.simulator.jframes.LoginFrame;
 import com.unmsm.operating.system.simulator.model.User;
+import java.io.File;
 
 public class OperatingSystemSimulator {
 
@@ -14,34 +16,54 @@ public class OperatingSystemSimulator {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        LoginController loginController = new LoginController();
-//        AdminController adminController = new AdminController();
-//        User user = loginController.getUser();
         
-//        User user10 = new User();
-//        user10.setRol("user10");
-//        user10.setUsername("user10");
-//        user10.setPassword("121");
-          
-        /*
-         * @adminController
-         * adiciona un nuevo usuario
-         * crea su espacio de trabajo directorio 
-         * crea archivo configuracion con sus credenciales
-        */ 
-//        adminController.addUser(user10);
+        AdminController admin = new AdminController();        
         
-        /* 
-         * @UserController
-         * controlador para obtener las credenciales
-        */
-        //UserController userController = new UserController("user9");
-        //System.out.println("Username: " + userController.getUsername());
-        //System.out.println("Pasword: " + userController.getPassword());
-        //System.out.println("Rol: " + userController.getRol()); // por ahora solo 2 roles: user y admin(solo uno)
+        User user1 = new User();
+        user1.setRol("user");
+        user1.setUsername("user1");
+        user1.setPassword("123");
         
-         LoginFrame loginFrame = new LoginFrame();
-         loginFrame.setVisible(true);
+        User user2 = new User();
+        user2.setRol("user");
+        user2.setUsername("user2");
+        user2.setPassword("123");
+        
+        User user3 = new User();
+        user3.setRol("user");
+        user3.setUsername("user3");
+        user3.setPassword("333");
+        
+        // Create a user
+        // admin.addUser(user1);
+        
+        //List users: admin.getListUser()
+        //for(String u: admin.getListUser()) {
+        //    System.out.println(u);
+        //}
+        
+        // Crear directorio (name, nameFatherDirectory)
+        FileController fileController = new FileController(user1);
+        //fileController.createDirectory("prueba", "user1");
+        
+        // Eliminar un directorio
+        fileController.deleteDirectory("user2");
+        
+        // Crear archivo
+        //fileController.createFile("miarchivo", "pdf", "user1");
+        
+        // Eliminar un archivo
+        //fileController.deleteFile("miarchivo.pdf");
+        
+        // Obtener la ruta y el nombre de un archivo
+        //System.out.println(fileController.getDirectory("miarchivo.pdf").getName());
+        //System.out.println(fileController.getDirectory("miarchivo.pdf").getPath());
+        
+        // Obtener la ruta y nombre de un directorio
+        //System.out.println(fileController.getDirectory("prueba").getName());
+        //System.out.println(fileController.getDirectory("prueba").getPath());
+        
+        
     }
     
 }
