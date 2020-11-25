@@ -43,6 +43,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         dateNow.setText(dateFormat.format(date));
         showExplorer();
         showIcon();
+        bodyDesktopConf();
     }
     
     public void showExplorer() {
