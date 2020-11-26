@@ -27,7 +27,7 @@ public class FileController {
             fileRutas = path.concat(user.getUsername()).concat("/").concat(user.getUsername()).concat("-path.properties");
             p.load(new FileReader(fileRutas));
         } catch (Exception ex) {
-            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo crear el directorio");
         }
     }
 
@@ -82,7 +82,7 @@ public class FileController {
         d.setPath(p.getProperty(name));
         return d;
     }
-
+    
     public Archivo getFile(String name) {
         Archivo d = new Archivo();
         d.setName(name);
@@ -111,7 +111,6 @@ public class FileController {
                 if (f.isDirectory()) {
                     deleteSubFile(f);
                 }
-                System.out.println(f.getAbsolutePath());
                 f.delete();
                 p.remove(f.getName());
                 p.store(new FileWriter(fileRutas), null);

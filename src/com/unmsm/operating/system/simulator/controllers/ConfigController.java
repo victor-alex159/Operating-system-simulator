@@ -86,7 +86,7 @@ public class ConfigController {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error no se puedo crear el archivo config");
+            JOptionPane.showMessageDialog(null, "Error no se pudo crear el archivo config");
         }
     }
 
@@ -108,6 +108,26 @@ public class ConfigController {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en lectura archivo config" + e.getMessage());
+        }
+    }
+    
+    public void deleteFilePath(User user) {
+        try {
+            File fileDeleted = new File(path.concat(user.getUsername()).concat("/").concat(user.getUsername()).concat("-path.properties"));
+
+            if (fileDeleted.exists()) {
+                try {
+                    if (fileDeleted.delete()) {
+                        JOptionPane.showMessageDialog(null, "Se eliminó");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error de eliminación");
+                    }
+                } catch (Error e) {
+                    JOptionPane.showMessageDialog(null, "Error en lectura archivo path" + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en lectura archivo path" + e.getMessage());
         }
     }
 }

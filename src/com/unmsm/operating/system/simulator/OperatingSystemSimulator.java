@@ -34,8 +34,10 @@ public class OperatingSystemSimulator {
         user3.setUsername("user3");
         user3.setPassword("333");
         
+        admin.deleteUser(user2);
+        
         // Create a user
-        // admin.addUser(user1);
+        // admin.addUser(user2);
         
         //List users: admin.getListUser()
         //for(String u: admin.getListUser()) {
@@ -43,17 +45,17 @@ public class OperatingSystemSimulator {
         //}
         
         // Crear directorio (name, nameFatherDirectory)
-        FileController fileController = new FileController(user1);
-        //fileController.createDirectory("prueba", "user1");
+        //FileController fileController = new FileController(user2);
+        //fileController.createDirectory("prueba", "user2");
         
         // Eliminar un directorio
-        fileController.deleteDirectory("user2");
+        //fileController.deleteDirectory("user2");
         
         // Crear archivo
-        //fileController.createFile("miarchivo", "pdf", "user1");
+        //fileController.createFile("archivo", "pdf", "prueba");
         
         // Eliminar un archivo
-        //fileController.deleteFile("miarchivo.pdf");
+        //fileController.deleteFile("prueba.pdf");
         
         // Obtener la ruta y el nombre de un archivo
         //System.out.println(fileController.getDirectory("miarchivo.pdf").getName());
@@ -63,6 +65,8 @@ public class OperatingSystemSimulator {
         //System.out.println(fileController.getDirectory("prueba").getName());
         //System.out.println(fileController.getDirectory("prueba").getPath());
         
+        //LoginFrame loginFrame = new LoginFrame();
+        //loginFrame.setVisible(true);
         
     }
     

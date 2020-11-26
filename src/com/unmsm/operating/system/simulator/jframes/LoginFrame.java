@@ -23,6 +23,7 @@ package com.unmsm.operating.system.simulator.jframes;
 import com.unmsm.operating.system.simulator.controllers.AdminController;
 import com.unmsm.operating.system.simulator.controllers.LoginController;
 import com.unmsm.operating.system.simulator.controllers.UserController;
+import com.unmsm.operating.system.simulator.model.User;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -35,8 +36,10 @@ import javax.swing.JOptionPane;
  * @since 2020-11-05
  */
 public class LoginFrame extends javax.swing.JFrame {
+    
+    User user = new User();
 
-    DesktopFrame desktopFrame = new DesktopFrame();
+    DesktopFrame desktopFrame;
     AdminController adminController = new AdminController();
     LoginController loginController = new LoginController();
     UserController userController;
@@ -58,6 +61,9 @@ public class LoginFrame extends javax.swing.JFrame {
     public void login() {
         String username = userJTextField.getText();
         String password = String.valueOf(passwordJPasswordField.getPassword());
+        this.user.setUsername(username);
+        this.user.setPassword(password);
+        desktopFrame = new DesktopFrame(user);
         userController = new UserController(username);
         if( username.equals(userController.getUsername()) && password.equals(userController.getPassword())) {
             desktopFrame.setVisible(true);

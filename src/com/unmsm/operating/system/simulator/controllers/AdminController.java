@@ -23,7 +23,7 @@ public class AdminController {
     public String[] getListUser() {
         String[] users = {};
         try {
-            p.load(new FileReader(path.concat("list-users.properties")));
+            p.load(new FileReader(path.concat("admin/").concat("list-users.properties")));
             users = p.getProperty("users").split(",");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en lectura en lista de usuarios" + e.getMessage());
@@ -44,10 +44,10 @@ public class AdminController {
             configController.createFileConfig(user);
             
             // Add user into list-user.properties
-            p.load(new FileReader(path.concat("list-users.properties")));
+            p.load(new FileReader(path.concat("admin/").concat("list-users.properties")));
             users = p.getProperty("users").concat(",").concat(user.getUsername());
             p.setProperty("users", users);
-            p.store(new FileWriter(path.concat("list-users.properties")), "New user add");
+            p.store(new FileWriter(path.concat("admin/").concat("list-users.properties")), "New user add");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al añadir usuario" + e.getMessage());
@@ -66,7 +66,7 @@ public class AdminController {
             }
 
             // Get list-user.properties
-            p.load(new FileReader(path.concat("list-users.properties")));
+            p.load(new FileReader(path.concat("admin/").concat("list-users.properties")));
             userList.addAll(Arrays.asList(p.getProperty("users").split(",")));
 
             // Delete user from list-user.properties
@@ -74,13 +74,14 @@ public class AdminController {
 
             // Delete user-config.properties
              configController.deleteFileConfig(user);
+             configController.deleteFilePath(user);
 
             // Convert userList: List<Stirng> to users: String
             users = userList.stream().map(Object::toString).collect(Collectors.joining(","));
 
             // Update user properties
             p.setProperty("users", users);
-            p.store(new FileWriter(path.concat("list-users.properties")), "User deleted");
+            p.store(new FileWriter(path.concat("admin/").concat("list-users.properties")), "User deleted");
 
             //Delete files and directory
             fileController = new FileController(user);

@@ -1,9 +1,11 @@
-
 package com.unmsm.operating.system.simulator.jframes;
 
+import com.unmsm.operating.system.simulator.controllers.FileController;
+import com.unmsm.operating.system.simulator.model.User;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,19 +23,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class DesktopFrame extends javax.swing.JFrame {
-    
+
     ExplorerFrame explorer = new ExplorerFrame();
-    
+    FileController fileController;
+    User user = new User();
 
     /**
      * Creates new form DesktopFrame
      */
-    public DesktopFrame() {
+    public DesktopFrame(User user) {
         initComponents();
+        this.user = user;
+        fileController = new FileController(user);
         this.setExtendedState(DesktopFrame.MAXIMIZED_BOTH);
         Date hour = new Date();
         Date date = new Date();
@@ -45,21 +51,25 @@ public class DesktopFrame extends javax.swing.JFrame {
         showIcon();
         bodyDesktopConf();
     }
-    
+
+    private DesktopFrame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void showExplorer() {
         iconMyPc.addMouseListener(new MouseAdapter() {
-            
+
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
                     explorer.setVisible(true);
                     explorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 }
             }
-            
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(SwingUtilities.isRightMouseButton(e)) {
+                if (SwingUtilities.isRightMouseButton(e)) {
                     JFrame frame = new JFrame();
                     JPanel panel = new JPanel();
                     JButton open = new JButton();
@@ -70,7 +80,7 @@ public class DesktopFrame extends javax.swing.JFrame {
                     map.put("Eliminar", delete);
                     map.put("Copiar", copy);
                     setWindowEdit(map);
-                    
+
                     open.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -79,30 +89,50 @@ public class DesktopFrame extends javax.swing.JFrame {
                             explorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
                         }
                     });
-                }  
+                }
             }
-            
+
         });
     }
-    
+
     public void bodyDesktopConf() {
         bodyDesktop.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(SwingUtilities.isRightMouseButton(e)) {
+                if (SwingUtilities.isRightMouseButton(e)) {
                     JButton addImage = new JButton();
                     JButton copy = new JButton();
                     JButton create = new JButton();
+                    JButton createDirectory = new JButton();
                     Map<String, JButton> map = new HashMap<>();
                     map.put("Agregar fondo", addImage);
                     map.put("Copiar", copy);
                     map.put("Crear arhivo", create);
+                    map.put("Crear carpeta", createDirectory);
                     setWindowEdit(map);
+
+                    create.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            if (SwingUtilities.isLeftMouseButton(e)) {
+                                fileController.createFile("archivo", "txt", user.getUsername());
+                            }
+                        }
+                    });
+                    
+                    createDirectory.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            if (SwingUtilities.isLeftMouseButton(e)) {
+                                fileController.createDirectory("midirectorio", user.getUsername());
+                            }
+                        }
+                    });
                 }
             }
         });
     }
-    
+
     public void setWindowEdit(Map<String, JButton> button) {
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
@@ -112,37 +142,37 @@ public class DesktopFrame extends javax.swing.JFrame {
             panel.add(btn.getValue());
         });
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.setPreferredSize(new Dimension(100, 100));
-        panel.setMaximumSize(new Dimension(100, 100));
+        panel.setPreferredSize(new Dimension(150, 150));
+        panel.setMaximumSize(new Dimension(150, 150));
         frame.getContentPane().add(panel);
-        frame.setSize(250, 150);
+        frame.setSize(250, 200);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        
+
     }
-    
+
     public void showIcon() {
         addImageIcon("myPc.png"); // Icono Mi Pc
         addImageIcon("startWindows.png");
-        
+
     }
-    
+
     public void addImageIcon(String nameImageIcon) {
         ImageIcon icon = new ImageIcon("./icons/".concat(nameImageIcon));
         Image img = icon.getImage();
         Image imgScale = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(imgScale);
-        
-        if(nameImageIcon.equals("startWindows.png")) {
+
+        if (nameImageIcon.equals("startWindows.png")) {
             startButton.setOpaque(false);
             startButton.setContentAreaFilled(false);
             startButton.setFocusPainted(false);
             startButton.setIcon(scaledIcon);
         } else {
-            iconMyPc.setIcon(scaledIcon);        
+            iconMyPc.setIcon(scaledIcon);
         }
     }
-    
+
     public void addImagToDesktop() throws IOException {
         BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
