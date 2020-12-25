@@ -48,11 +48,15 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="iconMyPc" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="iconMyPc" min="-2" pref="51" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="iconGame1" min="-2" pref="51" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="iconPaint" min="-2" pref="51" max="-2" attributes="0"/>
                       <Component id="iconInternet" min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="1032" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -60,7 +64,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="iconMyPc" min="-2" pref="61" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="iconMyPc" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                      <Component id="iconGame1" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="iconPaint" min="-2" pref="61" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -170,6 +177,17 @@
           </Properties>
           <Events>
             <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="iconInternetMouseDragged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="iconGame1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="0" red="33" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="3enRaya"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="iconGame1MouseDragged"/>
           </Events>
         </Component>
       </SubComponents>
