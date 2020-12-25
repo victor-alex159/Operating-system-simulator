@@ -27,11 +27,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
     PaintFrame paint = new PaintFrame();
+    TresenRaya game1=new TresenRaya();
     FileController fileController;
     User user = new User();
 
@@ -53,6 +55,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         showPaint();
         showIcon();
         showInternet();
+        showGame1();
         bodyDesktopConf();
     }
 
@@ -132,6 +135,20 @@ public class DesktopFrame extends javax.swing.JFrame {
 
         }
     }
+    
+    
+        public void showGame1() {
+        icongame1.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                    game1.setVisible(true);
+                    game1.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                }
+            }
+        });
+    }
 
     public void bodyDesktopConf() {
         bodyDesktop.addMouseListener(new MouseAdapter() {
@@ -193,6 +210,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         addImageIcon("myPc.png"); // Icono Mi Pc
         addImageIcon("paint.png");
         addImageIcon("internet.png");
+        addImageIcon("game1.png");
         addImageIcon("startWindows.png");
 
     }
@@ -212,8 +230,11 @@ public class DesktopFrame extends javax.swing.JFrame {
             iconMyPc.setIcon(scaledIcon);
         } else if (nameImageIcon.equals("paint.png")) {
             iconPaint.setIcon(scaledIcon);
-        } else {
+        }
+        else if (nameImageIcon.equals("internet.png")) {
             iconInternet.setIcon(scaledIcon);
+        }else {
+            icongame1.setIcon(scaledIcon);
         }
     }
 
@@ -240,6 +261,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         iconMyPc = new javax.swing.JLabel();
         iconPaint = new javax.swing.JLabel();
         iconInternet = new javax.swing.JLabel();
+        icongame1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -311,6 +333,14 @@ public class DesktopFrame extends javax.swing.JFrame {
             }
         });
 
+        icongame1.setBackground(new java.awt.Color(51, 0, 204));
+        icongame1.setText("3enRaya");
+        icongame1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                icongame1MouseDragged(evt);
+            }
+        });
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
@@ -319,16 +349,21 @@ public class DesktopFrame extends javax.swing.JFrame {
             .addGroup(bodyDesktopLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bodyDesktopLayout.createSequentialGroup()
+                        .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)
+                        .addComponent(icongame1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1048, Short.MAX_VALUE))
         );
         bodyDesktopLayout.setVerticalGroup(
             bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(icongame1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
@@ -384,6 +419,15 @@ public class DesktopFrame extends javax.swing.JFrame {
         iconInternet.setLocation(xDif, yDif);
     }//GEN-LAST:event_iconInternetMouseDragged
 
+    private void icongame1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icongame1MouseDragged
+        // TODO add your handling code here:
+        int x = evt.getX();
+        int y = evt.getY();
+        int xDif = icongame1.getLocation().x + x - icongame1.getWidth();
+        int yDif = icongame1.getLocation().y + y - icongame1.getHeight();
+        icongame1.setLocation(xDif, yDif);
+    }//GEN-LAST:event_icongame1MouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -426,6 +470,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel iconInternet;
     private javax.swing.JLabel iconMyPc;
     private javax.swing.JLabel iconPaint;
+    private javax.swing.JLabel icongame1;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel taskBar;
     // End of variables declaration//GEN-END:variables
