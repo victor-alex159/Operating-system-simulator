@@ -1,5 +1,6 @@
 package com.unmsm.operating.system.simulator.jframes;
 
+import com.unmsm.operating.system.simulator.apps.*;
 import com.unmsm.operating.system.simulator.controllers.FileController;
 import com.unmsm.operating.system.simulator.model.User;
 import java.awt.Component;
@@ -30,6 +31,7 @@ import javax.swing.SwingUtilities;
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
+    PaintFrame paint=new PaintFrame();
     FileController fileController;
     User user = new User();
 
@@ -48,6 +50,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow.setText(hourFormat.format(hour));
         dateNow.setText(dateFormat.format(date));
         showExplorer();
+        showPaint();
         showIcon();
         bodyDesktopConf();
     }
@@ -95,6 +98,19 @@ public class DesktopFrame extends javax.swing.JFrame {
         });
     }
 
+    public void showPaint() {
+        iconPaint.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                   paint.setVisible(true);
+                   paint.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                }
+            }
+    });
+    }
+
     public void bodyDesktopConf() {
         bodyDesktop.addMouseListener(new MouseAdapter() {
             @Override
@@ -119,7 +135,7 @@ public class DesktopFrame extends javax.swing.JFrame {
                             }
                         }
                     });
-                    
+
                     createDirectory.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseReleased(MouseEvent e) {
@@ -153,6 +169,7 @@ public class DesktopFrame extends javax.swing.JFrame {
 
     public void showIcon() {
         addImageIcon("myPc.png"); // Icono Mi Pc
+        addImageIcon("paint.png");
         addImageIcon("startWindows.png");
 
     }
@@ -168,8 +185,10 @@ public class DesktopFrame extends javax.swing.JFrame {
             startButton.setContentAreaFilled(false);
             startButton.setFocusPainted(false);
             startButton.setIcon(scaledIcon);
-        } else {
+        } else if (nameImageIcon.equals("myPc.png")) {
             iconMyPc.setIcon(scaledIcon);
+        } else {
+            iconPaint.setIcon(scaledIcon);
         }
     }
 
@@ -194,9 +213,12 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
         iconMyPc = new javax.swing.JLabel();
+        iconPaint = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
+
+        bodyDesktop.setBackground(new java.awt.Color(153, 204, 255));
 
         taskBar.setBackground(new java.awt.Color(30, 30, 30));
 
@@ -247,6 +269,14 @@ public class DesktopFrame extends javax.swing.JFrame {
             }
         });
 
+        iconPaint.setBackground(new java.awt.Color(51, 0, 204));
+        iconPaint.setText("Paint");
+        iconPaint.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconPaintMouseDragged(evt);
+            }
+        });
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
@@ -254,7 +284,9 @@ public class DesktopFrame extends javax.swing.JFrame {
             .addComponent(taskBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(bodyDesktopLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bodyDesktopLayout.setVerticalGroup(
@@ -262,9 +294,13 @@ public class DesktopFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
                 .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        iconPaint.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,6 +327,16 @@ public class DesktopFrame extends javax.swing.JFrame {
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_startButtonActionPerformed
+
+    private void iconPaintMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconPaintMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getX();
+        int y = evt.getY();
+        int xDif = iconPaint.getLocation().x + x - iconPaint.getWidth();
+        int yDif = iconPaint.getLocation().y + y - iconPaint.getHeight();
+        iconPaint.setLocation(xDif, yDif);
+
+    }//GEN-LAST:event_iconPaintMouseDragged
 
     /**
      * @param args the command line arguments
@@ -332,6 +378,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel dateNow;
     private javax.swing.JLabel hourNow;
     private javax.swing.JLabel iconMyPc;
+    private javax.swing.JLabel iconPaint;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel taskBar;
     // End of variables declaration//GEN-END:variables
