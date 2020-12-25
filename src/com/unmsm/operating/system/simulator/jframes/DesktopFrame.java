@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
-    PaintFrame paint=new PaintFrame();
+    PaintFrame paint = new PaintFrame();
     FileController fileController;
     User user = new User();
 
@@ -52,6 +52,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         showExplorer();
         showPaint();
         showIcon();
+        showInternet();
         bodyDesktopConf();
     }
 
@@ -104,11 +105,32 @@ public class DesktopFrame extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
-                   paint.setVisible(true);
-                   paint.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                    paint.setVisible(true);
+                    paint.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 }
             }
-    });
+        });
+    }
+
+    public void showInternet() {
+        iconInternet.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                    navegador();
+                }
+            }
+        });
+    }
+
+    public static void navegador() {
+        Runtime app = Runtime.getRuntime();
+        try {
+            app.exec("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe");
+        } catch (Exception e) {
+
+        }
     }
 
     public void bodyDesktopConf() {
@@ -170,6 +192,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     public void showIcon() {
         addImageIcon("myPc.png"); // Icono Mi Pc
         addImageIcon("paint.png");
+        addImageIcon("internet.png");
         addImageIcon("startWindows.png");
 
     }
@@ -187,8 +210,10 @@ public class DesktopFrame extends javax.swing.JFrame {
             startButton.setIcon(scaledIcon);
         } else if (nameImageIcon.equals("myPc.png")) {
             iconMyPc.setIcon(scaledIcon);
-        } else {
+        } else if (nameImageIcon.equals("paint.png")) {
             iconPaint.setIcon(scaledIcon);
+        } else {
+            iconInternet.setIcon(scaledIcon);
         }
     }
 
@@ -214,6 +239,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         startButton = new javax.swing.JButton();
         iconMyPc = new javax.swing.JLabel();
         iconPaint = new javax.swing.JLabel();
+        iconInternet = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -277,6 +303,14 @@ public class DesktopFrame extends javax.swing.JFrame {
             }
         });
 
+        iconInternet.setBackground(new java.awt.Color(51, 0, 204));
+        iconInternet.setText("Internet");
+        iconInternet.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconInternetMouseDragged(evt);
+            }
+        });
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
@@ -286,7 +320,8 @@ public class DesktopFrame extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bodyDesktopLayout.setVerticalGroup(
@@ -296,7 +331,9 @@ public class DesktopFrame extends javax.swing.JFrame {
                 .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
                 .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -338,6 +375,15 @@ public class DesktopFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_iconPaintMouseDragged
 
+    private void iconInternetMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconInternetMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getX();
+        int y = evt.getY();
+        int xDif = iconInternet.getLocation().x + x - iconInternet.getWidth();
+        int yDif = iconInternet.getLocation().y + y - iconInternet.getHeight();
+        iconInternet.setLocation(xDif, yDif);
+    }//GEN-LAST:event_iconInternetMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -377,6 +423,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JPanel bodyDesktop;
     private javax.swing.JLabel dateNow;
     private javax.swing.JLabel hourNow;
+    private javax.swing.JLabel iconInternet;
     private javax.swing.JLabel iconMyPc;
     private javax.swing.JLabel iconPaint;
     private javax.swing.JButton startButton;
