@@ -39,17 +39,19 @@ public class FileController {
         File fileCreated = null;
         String path;
         try {
-            path = p.getProperty(nameDirectoryFather).concat("/").concat(name);
+            //path = p.getProperty(nameDirectoryFather).concat("/").concat(name);
+            path = ((nameDirectoryFather).concat("/").concat(name));
+            System.out.println(path);
             fileCreated = new File(path);
             if (!fileCreated.exists()) {
                 try {
                     if (fileCreated.mkdir()) {
-                        p.setProperty(name, path);
-                        p.store(new FileWriter(fileRutas), "");
+                        //p.setProperty(name, path);
+                        //p.store(new FileWriter(fileRutas), "");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo crear el directorio");
                     }
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "No se pudo crear el directorio");
                 }
             }
@@ -133,5 +135,18 @@ public class FileController {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error eliminando, el archivo no existe");
         }
+    }
+    
+    public void moveFileToRecicle(String nameFile) {
+        String pathFile = ("./docFiles/".concat(nameFile).concat(".txt"));
+        String pathRecicle = "./recicle";
+        File file = new File(pathFile);
+        File directoryRecicle = new File(pathRecicle);
+        
+        boolean success = file.renameTo(new File(directoryRecicle, file.getName()));
+        if(!success) {
+            JOptionPane.showMessageDialog(null, "Error al mover a directorio de Reciclaje");
+        }
+        
     }
 }

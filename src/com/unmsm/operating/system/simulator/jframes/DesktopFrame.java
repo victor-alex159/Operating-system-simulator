@@ -2,6 +2,7 @@ package com.unmsm.operating.system.simulator.jframes;
 
 import com.unmsm.operating.system.simulator.controllers.FileController;
 import com.unmsm.operating.system.simulator.model.User;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,7 @@ import javax.swing.SwingUtilities;
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
+    ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
     FileController fileController;
     User user = new User();
 
@@ -48,12 +51,58 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow.setText(hourFormat.format(hour));
         dateNow.setText(dateFormat.format(date));
         showExplorer();
+        showReciclaje();
         showIcon();
         bodyDesktopConf();
+        addImagToDesktop();
     }
 
     private DesktopFrame() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void showReciclaje() {
+        iconReciclaje.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                    reciclajeExplorer.setVisible(true);
+                    reciclajeExplorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    JFrame frame = new JFrame();
+                    JPanel panel = new JPanel();
+                    JButton open = new JButton();
+                    Map<String, JButton> map = new HashMap<>();
+                    map.put("Abrir", open);
+                    setWindowEdit(map);
+
+                    open.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            reciclajeExplorer.setVisible(true);
+                            frame.setVisible(false);
+                            reciclajeExplorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                        }
+                    });
+                }
+            }
+        });
+        iconReciclaje.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                int xDif = iconReciclaje.getLocation().x + x - iconReciclaje.getWidth();
+                int yDif = iconReciclaje.getLocation().y + y - iconReciclaje.getHeight();
+                iconReciclaje.setLocation(xDif, yDif);
+            }
+        });
     }
 
     public void showExplorer() {
@@ -154,7 +203,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     public void showIcon() {
         addImageIcon("myPc.png"); // Icono Mi Pc
         addImageIcon("startWindows.png");
-
+        addImageIcon("reciclaje.png");
     }
 
     public void addImageIcon(String nameImageIcon) {
@@ -168,15 +217,21 @@ public class DesktopFrame extends javax.swing.JFrame {
             startButton.setContentAreaFilled(false);
             startButton.setFocusPainted(false);
             startButton.setIcon(scaledIcon);
-        } else {
+        } else if(nameImageIcon.equals("myPc.png")) {
             iconMyPc.setIcon(scaledIcon);
+        } else if(nameImageIcon.equals("reciclaje.png")) {
+            iconReciclaje.setIcon(scaledIcon);
+        } else if(nameImageIcon.equals("fondo1.jpg")) {
+            JLabel label = new JLabel("", icon, JLabel.CENTER);
+            bodyDesktop.add(label);
         }
     }
 
-    public void addImagToDesktop() throws IOException {
-        BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        add(picLabel);
+    public void addImagToDesktop() {
+        ImageIcon image = new ImageIcon("./icons/fondo1.jpg");
+        JLabel label = new JLabel("", image, JLabel.CENTER);
+        bodyDesktop = new JPanel(new BorderLayout());
+        bodyDesktop.add( label, BorderLayout.CENTER );
     }
 
     /**
@@ -194,6 +249,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
         iconMyPc = new javax.swing.JLabel();
+        iconReciclaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -247,22 +303,28 @@ public class DesktopFrame extends javax.swing.JFrame {
             }
         });
 
+        iconReciclaje.setText("RECICLAJE");
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
             bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(taskBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(bodyDesktopLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconReciclaje)
+                    .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bodyDesktopLayout.setVerticalGroup(
             bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(48, 48, 48)
                 .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(iconReciclaje, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
                 .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -332,6 +394,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel dateNow;
     private javax.swing.JLabel hourNow;
     private javax.swing.JLabel iconMyPc;
+    private javax.swing.JLabel iconReciclaje;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel taskBar;
     // End of variables declaration//GEN-END:variables

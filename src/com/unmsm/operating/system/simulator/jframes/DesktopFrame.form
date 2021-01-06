@@ -41,8 +41,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="taskBar" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                  <Component id="iconMyPc" min="-2" pref="51" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="iconReciclaje" min="-2" max="-2" attributes="0"/>
+                      <Component id="iconMyPc" min="-2" pref="59" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -50,9 +53,11 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Component id="iconMyPc" min="-2" pref="61" max="-2" attributes="0"/>
-                  <EmptySpace pref="558" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="iconReciclaje" min="-2" pref="56" max="-2" attributes="0"/>
+                  <EmptySpace pref="466" max="32767" attributes="0"/>
                   <Component id="taskBar" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -133,6 +138,11 @@
           <Events>
             <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="iconMyPcMouseDragged"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="iconReciclaje">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="RECICLAJE"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

@@ -1,6 +1,7 @@
 
 package com.unmsm.operating.system.simulator.jframes;
 
+import com.unmsm.operating.system.simulator.controllers.FileController;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
+
+import com.unmsm.operating.system.simulator.model.Directory;
 
 public class ExplorerFrame extends javax.swing.JFrame {
 
@@ -49,7 +53,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                     JButton create = new JButton("crear documento");
                     JButton open = new JButton("abir");
                     JButton delete = new JButton("eliminar");
-                    JButton copy = new JButton("cppiar");
+                    JButton copy = new JButton("copiar");
                     panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                     panel.setPreferredSize(new Dimension(100, 100));
                     panel.setMaximumSize(new Dimension(100, 100));
@@ -86,6 +90,13 @@ public class ExplorerFrame extends javax.swing.JFrame {
                                          try {
                                             createFile(editText.getText());
                                             addFile(editText.getText());
+                                             FileController fileController = new FileController();
+                                             //fileController.createDirectory("carpeta1", "./docFiles");
+                                             //fileController.createFile("archivo", "txt", "docFiles");
+                                             //fileController.moveFileToRecicle(editText.getText());
+                                             
+                                             
+                                             
                                         }catch(IOException ex) {
                                             ex.printStackTrace();
                                         }
@@ -170,6 +181,25 @@ public class ExplorerFrame extends javax.swing.JFrame {
         }
     }
     
+    public void deleteFile(String nameFile) {
+        File reader = null;
+        BufferedReader bufferReader = null;
+        String path = ("./docFiles/".concat(nameFile).concat(".txt"));
+
+        try {
+            reader = new File(path);
+            
+            if(reader.delete()) {
+                System.out.println("Archivo eliminado");
+            }
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            
+        }
+    }
+    
     public void readFile() {
         
     }
@@ -190,6 +220,40 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 int yDif = icon.getLocation().y + y - icon.getHeight();
                 icon.setLocation(xDif, yDif);
             }
+        });
+        
+        icon.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(SwingUtilities.isRightMouseButton(e)) {
+                    JFrame frame = new JFrame();
+                    JPanel panel = new JPanel();
+                    JButton delete = new JButton("eliminar");
+                    JButton copy = new JButton("copiar");
+                    panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    panel.setPreferredSize(new Dimension(100, 100));
+                    panel.setMaximumSize(new Dimension(100, 100));
+                    panel.add(delete);
+                    panel.add(copy);
+                    frame.getContentPane().add(panel);
+                    frame.setSize(250, 150);
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                    
+                    delete.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            if(SwingUtilities.isLeftMouseButton(e)) {
+                                FileController fileController = new FileController();
+                                fileController.moveFileToRecicle(nameFile);
+                                
+                            }
+                        }
+                    });
+                }
+            }
+            
         });
     }
     
@@ -224,7 +288,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
 
-        sideBar.setBackground(new java.awt.Color(153, 153, 153));
+        sideBar.setBackground(new java.awt.Color(240, 242, 245));
 
         javax.swing.GroupLayout sideBarLayout = new javax.swing.GroupLayout(sideBar);
         sideBar.setLayout(sideBarLayout);
@@ -254,7 +318,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(directoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,13 +339,14 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        bodyExplorer.setBackground(new java.awt.Color(102, 102, 102));
+        bodyExplorer.setBackground(new java.awt.Color(255, 255, 255));
+        bodyExplorer.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout bodyExplorerLayout = new javax.swing.GroupLayout(bodyExplorer);
         bodyExplorer.setLayout(bodyExplorerLayout);
         bodyExplorerLayout.setHorizontalGroup(
             bodyExplorerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 748, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         bodyExplorerLayout.setVerticalGroup(
             bodyExplorerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +360,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
             .addComponent(headerExplorer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(explorerPanelLayout.createSequentialGroup()
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bodyExplorer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
