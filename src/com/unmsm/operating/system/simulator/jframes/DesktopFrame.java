@@ -37,6 +37,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     PaintFrame paint = new PaintFrame();
     TresenRaya game1=new TresenRaya();
     Calculadora calculadora=new Calculadora();
+    Notepad notePad = new Notepad();
     FileController fileController;
     User user = new User();
 
@@ -55,14 +56,13 @@ public class DesktopFrame extends javax.swing.JFrame {
         hourNow.setText(hourFormat.format(hour));
         dateNow.setText(dateFormat.format(date));
         showExplorer();
-        showPaint();
+        showWindows();
         showReciclaje();
         showIcon();
         showInternet();
-        showGame1();
-        showCalculadora();
         bodyDesktopConf();
         addImagToDesktop();
+        iconNotePadMouseDragger();
     }
 
     private DesktopFrame() {
@@ -151,18 +151,25 @@ public class DesktopFrame extends javax.swing.JFrame {
 
         });
     }
-
-    public void showPaint() {
-        iconPaint.addMouseListener(new MouseAdapter() {
+    
+    public void iconDoubleClicked(JLabel icon, JFrame frame) {
+        icon.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
-                    paint.setVisible(true);
-                    paint.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 }
             }
         });
+    }
+    
+    public void showWindows() {
+        iconDoubleClicked(iconPaint, paint);
+        iconDoubleClicked(iconGame1, game1);
+        iconDoubleClicked(iconCalculadora, calculadora);
+        iconDoubleClicked(iconNotePad, notePad);
     }
 
     public void showInternet() {
@@ -184,31 +191,6 @@ public class DesktopFrame extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-    }
-    public void showGame1() {
-        iconGame1.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
-                    game1.setVisible(true);
-                    game1.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                }
-            }
-        });
-    }
-    
-    public void showCalculadora() {
-        iconCalculadora.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
-                    calculadora.setVisible(true);
-                    calculadora.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                }
-            }
-        });
     }
 
     public void bodyDesktopConf() {
@@ -275,6 +257,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         addImageIcon("calculadora.png");
         addImageIcon("startWindows.png");
         addImageIcon("reciclaje.png");
+        addImageIcon("iconNotePad.png");
     }
 
     public void addImageIcon(String nameImageIcon) {
@@ -298,6 +281,8 @@ public class DesktopFrame extends javax.swing.JFrame {
             iconInternet.setIcon(scaledIcon);
         } else if(nameImageIcon.equals("game1.png")){
             iconGame1.setIcon(scaledIcon);
+        } else if(nameImageIcon.equals("iconNotePad.png")) {
+            iconNotePad.setIcon(scaledIcon);
         }
         else{
             iconCalculadora.setIcon(scaledIcon);
@@ -331,6 +316,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         iconGame1 = new javax.swing.JLabel();
         iconCalculadora = new javax.swing.JLabel();
         iconReciclaje = new javax.swing.JLabel();
+        iconNotePad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -420,6 +406,8 @@ public class DesktopFrame extends javax.swing.JFrame {
 
         iconReciclaje.setText("RECICALJE");
 
+        iconNotePad.setText("Bloc de Notas");
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
@@ -429,7 +417,10 @@ public class DesktopFrame extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(bodyDesktopLayout.createSequentialGroup()
+                            .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(86, 86, 86)
+                            .addComponent(iconNotePad))
                         .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(bodyDesktopLayout.createSequentialGroup()
                                 .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -447,16 +438,21 @@ public class DesktopFrame extends javax.swing.JFrame {
         bodyDesktopLayout.setVerticalGroup(
             bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyDesktopLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconGame1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyDesktopLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(iconMyPc, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iconGame1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(iconPaint, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iconCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addComponent(iconInternet, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bodyDesktopLayout.createSequentialGroup()
+                        .addGap(252, 252, 252)
+                        .addComponent(iconNotePad)))
                 .addGap(34, 34, 34)
                 .addComponent(iconReciclaje, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
@@ -479,6 +475,19 @@ public class DesktopFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void iconNotePadMouseDragger() {
+        iconNotePad.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                int xDif = iconNotePad.getLocation().x + x - iconNotePad.getWidth();
+                int yDif = iconNotePad.getLocation().y + y - iconNotePad.getHeight();
+                iconNotePad.setLocation(xDif, yDif);
+            }
+        });
+    }
+    
     private void iconMyPcMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconMyPcMouseDragged
         int x = evt.getX();
         int y = evt.getY();
@@ -571,6 +580,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel iconGame1;
     private javax.swing.JLabel iconInternet;
     private javax.swing.JLabel iconMyPc;
+    private javax.swing.JLabel iconNotePad;
     private javax.swing.JLabel iconPaint;
     private javax.swing.JLabel iconReciclaje;
     private javax.swing.JButton startButton;

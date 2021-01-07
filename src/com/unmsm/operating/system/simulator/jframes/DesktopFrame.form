@@ -49,7 +49,11 @@
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="iconInternet" min="-2" pref="51" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="iconInternet" min="-2" pref="51" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="iconNotePad" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="iconMyPc" min="-2" pref="51" max="-2" attributes="0"/>
@@ -75,18 +79,26 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="iconMyPc" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
-                      <Component id="iconGame1" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="iconMyPc" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                              <Component id="iconGame1" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="iconPaint" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                              <Component id="iconCalculadora" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="iconInternet" min="-2" pref="61" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
+                          <Component id="iconNotePad" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="iconPaint" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
-                      <Component id="iconCalculadora" alignment="3" min="-2" pref="61" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="iconInternet" min="-2" pref="61" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="iconReciclaje" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace pref="227" max="32767" attributes="0"/>
@@ -221,6 +233,11 @@
         <Component class="javax.swing.JLabel" name="iconReciclaje">
           <Properties>
             <Property name="text" type="java.lang.String" value="RECICALJE"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="iconNotePad">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bloc de Notas"/>
           </Properties>
         </Component>
       </SubComponents>
