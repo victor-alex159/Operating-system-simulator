@@ -1,6 +1,7 @@
 package com.unmsm.operating.system.simulator.jframes;
 
 import com.unmsm.operating.system.simulator.apps.*;
+import com.unmsm.operating.system.simulator.apps.paint.DrawFrame;
 import com.unmsm.operating.system.simulator.controllers.FileController;
 import com.unmsm.operating.system.simulator.model.User;
 import java.awt.BorderLayout;
@@ -8,7 +9,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -34,7 +36,7 @@ public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
     ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
-    PaintFrame paint = new PaintFrame();
+    //PaintFrame paint = new PaintFrame();
     TresenRaya game1=new TresenRaya();
     Calculadora calculadora=new Calculadora();
     Notepad notePad = new Notepad();
@@ -60,6 +62,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         showReciclaje();
         showIcon();
         showInternet();
+        showPaint();
         bodyDesktopConf();
         addImagToDesktop();
         iconNotePadMouseDragger();
@@ -166,7 +169,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     }
     
     public void showWindows() {
-        iconDoubleClicked(iconPaint, paint);
+        //iconDoubleClicked(iconPaint, paint);
         iconDoubleClicked(iconGame1, game1);
         iconDoubleClicked(iconCalculadora, calculadora);
         iconDoubleClicked(iconNotePad, notePad);
@@ -192,6 +195,32 @@ public class DesktopFrame extends javax.swing.JFrame {
 
         }
     }
+    
+    public void showPaint() {
+        iconPaint.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                               Draw();
+                }
+            }
+        });
+    }
+    
+    public static void Draw()
+	{       DrawFrame frame = new DrawFrame();
+		frame.setTitle("Dibuja");
+		frame.setBackground( new Color(39,174,96));
+		frame.pack();
+
+		// put the frame in the middle of the display
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+
+		frame.setVisible(true);
+	}
 
     public void bodyDesktopConf() {
         bodyDesktop.addMouseListener(new MouseAdapter() {
