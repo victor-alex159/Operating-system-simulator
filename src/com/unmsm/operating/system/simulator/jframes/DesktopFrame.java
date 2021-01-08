@@ -31,11 +31,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
     ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
+    DrawFrame drawFrame = new DrawFrame();
     //PaintFrame paint = new PaintFrame();
     TresenRaya game1=new TresenRaya();
     Calculadora calculadora=new Calculadora();
@@ -51,6 +53,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         this.user = user;
         fileController = new FileController(user);
         this.setExtendedState(DesktopFrame.MAXIMIZED_BOTH);
+        
         Date hour = new Date();
         Date date = new Date();
         DateFormat hourFormat = new SimpleDateFormat("hh:mm a");
@@ -203,6 +206,7 @@ public class DesktopFrame extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
                                Draw();
+                               drawFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 }
             }
         });

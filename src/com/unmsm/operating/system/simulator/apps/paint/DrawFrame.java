@@ -95,7 +95,7 @@ public class DrawFrame extends JFrame
 		@Override
 		public void windowClosing(WindowEvent event)
 		{
-			System.exit(0);
+			//System.exit(0);
 		}
 	}
 	

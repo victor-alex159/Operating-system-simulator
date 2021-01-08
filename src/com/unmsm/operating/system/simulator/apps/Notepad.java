@@ -26,25 +26,25 @@ public class Notepad extends javax.swing.JFrame {
     /**
      * Creates new form Notepad
      */
+    
     public Notepad() {
         initComponents();
         newFile();
-        exit();
         about();
         openFile();
         saveFile();
     }
     
     
-    public void exit() {
+    /*public void exit() {
         subMenuExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                System.exit(0);
+                //dispose();
+                //System.exit(0);
             }
         });
-    }
+    }*/
     
     public void about() {
         subMenuAbout.addActionListener(new ActionListener() {
@@ -68,7 +68,7 @@ public class Notepad extends javax.swing.JFrame {
         subMenuOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openFile();
+                open();
             }
         });
     }
@@ -145,7 +145,6 @@ public class Notepad extends javax.swing.JFrame {
         subMenuNewFile = new javax.swing.JMenuItem();
         subMenuOpen = new javax.swing.JMenuItem();
         subMenuSave = new javax.swing.JMenuItem();
-        subMenuExit = new javax.swing.JMenuItem();
         menuInfo = new javax.swing.JMenu();
         subMenuAbout = new javax.swing.JMenuItem();
 
@@ -182,14 +181,6 @@ public class Notepad extends javax.swing.JFrame {
         });
         menuFile.add(subMenuSave);
 
-        subMenuExit.setText("Salir");
-        subMenuExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuExitActionPerformed(evt);
-            }
-        });
-        menuFile.add(subMenuExit);
-
         jMenuBar1.add(menuFile);
 
         menuInfo.setText("Info");
@@ -218,10 +209,6 @@ public class Notepad extends javax.swing.JFrame {
     private void subMenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_subMenuSaveActionPerformed
-
-    private void subMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuExitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_subMenuExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,12 +248,10 @@ public class Notepad extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuInfo;
     private javax.swing.JMenuItem subMenuAbout;
-    private javax.swing.JMenuItem subMenuExit;
     private javax.swing.JMenuItem subMenuNewFile;
     private javax.swing.JMenuItem subMenuOpen;
     private javax.swing.JMenuItem subMenuSave;
