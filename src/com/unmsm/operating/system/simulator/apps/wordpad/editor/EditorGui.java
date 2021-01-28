@@ -176,7 +176,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       {
       
          ventana=new JFrame("Editor");
-         ventana.setIconImage(new ImageIcon(getClass().getResource("/iconos/libro.png")).getImage());
+         ventana.setIconImage(new ImageIcon(getClass().getResource("libro.png")).getImage());
          ref=new OperacionesFichero();
          inicializaPaneles();
          inicializaComponentes();
