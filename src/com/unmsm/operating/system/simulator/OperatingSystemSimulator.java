@@ -65,8 +65,8 @@ public class OperatingSystemSimulator {
         //System.out.println(fileController.getDirectory("prueba").getName());
         //System.out.println(fileController.getDirectory("prueba").getPath());
         
-        //LoginFrame loginFrame = new LoginFrame();
-        //loginFrame.setVisible(true);
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setVisible(true);
         
     }
     
