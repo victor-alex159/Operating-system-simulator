@@ -200,7 +200,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       public EditorGui(String directorio)
       {
     	 ventana=new JFrame("Editor");
-    	 ventana.setIconImage(new ImageIcon(getClass().getResource("/iconos/libro.png")).getImage());
+    	 ventana.setIconImage(new ImageIcon(getClass().getResource("libro.png")).getImage());
          ref=new OperacionesFichero();
          nombreFichero=directorio;
         
@@ -252,36 +252,36 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
        * */
       public void menuArchivo()
       {
-    	  jmiAbrir=new JMenuItem("Abrir",new ImageIcon(getClass().getResource("/iconos/folder-horizontal-open.png")));
+    	  jmiAbrir=new JMenuItem("Abrir",new ImageIcon(getClass().getResource("folder-horizontal-open.png")));
     	  jmiAbrir.setBackground(new Color(176,196,222));
     	  jmiAbrir.addActionListener(new EscuchaAbrir());
     	  jmArchivo.add(jmiAbrir);
     	  
-    	  jmiNuevo=new JMenuItem("Nuevo",new ImageIcon(getClass().getResource("/iconos/page_2.png")));
+    	  jmiNuevo=new JMenuItem("Nuevo",new ImageIcon(getClass().getResource("page_2.png")));
     	  jmiNuevo.setBackground(new Color(176,196,222));
     	  jmiNuevo.addActionListener(new EscuchaNuevo());
     	  jmArchivo.add(jmiNuevo);
     	  jmArchivo.addSeparator();
     	  
-    	  jmiGuardar=new JMenuItem("Guardar",new ImageIcon(getClass().getResource("/iconos/disk.png")));
+    	  jmiGuardar=new JMenuItem("Guardar",new ImageIcon(getClass().getResource("disk.png")));
     	  jmiGuardar.setBackground(new Color(176,196,222));
     	  jmiGuardar.addActionListener(new EscuchaGuardar());
     	  jmArchivo.add(jmiGuardar);
     	      	  
-    	  jmiGuardarComo=new JMenuItem("Guardar Como",new ImageIcon(getClass().getResource("/iconos/drive_disk.png")));
+    	  jmiGuardarComo=new JMenuItem("Guardar Como",new ImageIcon(getClass().getResource("drive_disk.png")));
     	  jmiGuardarComo.setBackground(new Color(176,196,222));
     	  jmiGuardarComo.addActionListener(new EscuchaGuardarComo());
     	  jmArchivo.add(jmiGuardarComo);
     	  jmArchivo.addSeparator();
     	  
     	  
-    	  jmiActualizar=new JMenuItem("Recargar",new ImageIcon(getClass().getResource("/iconos/arrow_refresh.png")));
+    	  jmiActualizar=new JMenuItem("Recargar",new ImageIcon(getClass().getResource("arrow_refresh.png")));
     	  jmiActualizar.setBackground(new Color(176,196,222));
     	  jmiActualizar.addActionListener(new EscuchaActualizar());
     	  jmArchivo.add(jmiActualizar);
     	  jmArchivo.addSeparator();
     	  
-    	  jmiSalir=new JMenuItem("Salir",new ImageIcon(getClass().getResource("/iconos/cross-circle.png")));
+    	  jmiSalir=new JMenuItem("Salir",new ImageIcon(getClass().getResource("cross-circle.png")));
     	  jmiSalir.setBackground(new Color(176,196,222));
     	  jmiSalir.addActionListener(new EscuchaSalir());
     	  
@@ -294,30 +294,30 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       public void menuEdicion()
       {
     	  
-    	  jmiReemplazar=new JMenuItem("Reemplazar",new ImageIcon(getClass().getResource("/iconos/textfield_rename.png")));
+    	  jmiReemplazar=new JMenuItem("Reemplazar",new ImageIcon(getClass().getResource("textfield_rename.png")));
     	  jmiReemplazar.setBackground(new Color(176,196,222));
     	  jmiReemplazar.addActionListener(new EscuchaReemplaza());
     	  jmEdicion.add(jmiReemplazar);
     	  jmEdicion.addSeparator();
     	    	  
-    	  jmiFuente=new JMenuItem("Fuente",new ImageIcon(getClass().getResource("/iconos/font.png")));
+    	  jmiFuente=new JMenuItem("Fuente",new ImageIcon(getClass().getResource("font.png")));
     	  jmiFuente.setBackground(new Color(176,196,222));
     	  jmiFuente.addActionListener(new EscuchaFuente());
     	  jmEdicion.add(jmiFuente);
     	  jmEdicion.addSeparator();
     	  
     	  
-    	  jmiCopiar=new JMenuItem("Copiar",new ImageIcon(getClass().getResource("/iconos/page_2_copy.png")));
+    	  jmiCopiar=new JMenuItem("Copiar",new ImageIcon(getClass().getResource("page_2_copy.png")));
     	  jmiCopiar.setBackground(new Color(176,196,222));
     	  jmiCopiar.addActionListener(new EscuchaCopia());
     	  jmEdicion.add(jmiCopiar);
     	  
-    	  jmiPegar=new JMenuItem("Pegar",new ImageIcon(getClass().getResource("/iconos/broom.png")));
+    	  jmiPegar=new JMenuItem("Pegar",new ImageIcon(getClass().getResource("broom.png")));
     	  jmiPegar.setBackground(new Color(176,196,222));
     	  jmiPegar.addActionListener(new EscuchaPega());
     	  jmEdicion.add(jmiPegar);
     	  
-    	  jmiCortar=new JMenuItem("Cortar",new ImageIcon(getClass().getResource("/iconos/cut.png")));
+    	  jmiCortar=new JMenuItem("Cortar",new ImageIcon(getClass().getResource("cut.png")));
     	  jmiCortar.setBackground(new Color(176,196,222));
     	  jmiCortar.addActionListener(new EscuchaCorta());
     	  jmEdicion.add(jmiCortar);
@@ -330,7 +330,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       public void menuAyuda()
       {
     	   	      	  
-          jmiAcerca=new JMenuItem("Acerca de..",new ImageIcon(getClass().getResource("/iconos/eye.png")));
+          jmiAcerca=new JMenuItem("Acerca de..",new ImageIcon(getClass().getResource("eye.png")));
           jmiAcerca.setBackground(new Color(176,196,222));
           jmiAcerca.addActionListener(new EscuchaAcercaDe());
           jmAyuda.add(jmiAcerca);
@@ -347,12 +347,12 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
     	  jtbHerramientas=new JToolBar("");
     	  jtbHerramientas.setBorder(new PanelBorder(""));
     	  
-    	  jbNuevo=new JButton(new ImageIcon(getClass().getResource("/iconos/page_2.png")));
+    	  jbNuevo=new JButton(new ImageIcon(getClass().getResource("page_2.png")));
     	  jbNuevo.setToolTipText("Crear nuevo documento");
     	  jbNuevo.addActionListener(new EscuchaNuevo());
     	  jtbHerramientas.add(jbNuevo);
     	     	  
-    	  jbAbrir=new JButton(new ImageIcon(getClass().getResource("/iconos/folder-horizontal-open.png")));
+    	  jbAbrir=new JButton(new ImageIcon(getClass().getResource("folder-horizontal-open.png")));
     	  jbAbrir.addActionListener(new EscuchaAbrir());
     	  jbAbrir.setToolTipText("Abrir documento");
     	  jtbHerramientas.add(jbAbrir);
