@@ -2,6 +2,7 @@ package com.unmsm.operating.system.simulator.jframes;
 
 import com.unmsm.operating.system.simulator.apps.*;
 import com.unmsm.operating.system.simulator.apps.paint.DrawFrame;
+import com.unmsm.operating.system.simulator.apps.wordpad.editor.EditorGui;
 import com.unmsm.operating.system.simulator.controllers.FileController;
 import com.unmsm.operating.system.simulator.model.User;
 import java.awt.BorderLayout;
@@ -40,6 +41,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     DrawFrame drawFrame = new DrawFrame();
     //PaintFrame paint = new PaintFrame();
     TresenRaya game1=new TresenRaya();
+    EditorGui wordpad = new EditorGui();
     Calculadora calculadora=new Calculadora();
     Notepad notePad = new Notepad();
     FileController fileController;
@@ -60,6 +62,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         hourNow.setText(hourFormat.format(hour));
         dateNow.setText(dateFormat.format(date));
+        showWordpad();
         showExplorer();
         showWindows();
         showReciclaje();
@@ -212,6 +215,18 @@ public class DesktopFrame extends javax.swing.JFrame {
         });
     }
     
+    public void showWordpad() {
+        iconWordpad.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                               wordpad.getVentana().setVisible(true);
+                }
+            }
+        });
+    }
+    
     public static void Draw()
 	{       DrawFrame frame = new DrawFrame();
 		frame.setTitle("Dibuja");
@@ -291,6 +306,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         addImageIcon("startWindows.png");
         addImageIcon("reciclaje.png");
         addImageIcon("iconNotePad.png");
+        addImageIcon("wordpad.png");
     }
 
     public void addImageIcon(String nameImageIcon) {
@@ -316,6 +332,8 @@ public class DesktopFrame extends javax.swing.JFrame {
             iconGame1.setIcon(scaledIcon);
         } else if(nameImageIcon.equals("iconNotePad.png")) {
             iconNotePad.setIcon(scaledIcon);
+        } else if(nameImageIcon.equals("wordpad.png")) {
+            iconWordpad.setIcon(scaledIcon);
         }
         else{
             iconCalculadora.setIcon(scaledIcon);
@@ -350,6 +368,7 @@ public class DesktopFrame extends javax.swing.JFrame {
         iconCalculadora = new javax.swing.JLabel();
         iconReciclaje = new javax.swing.JLabel();
         iconNotePad = new javax.swing.JLabel();
+        iconWordpad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -441,6 +460,13 @@ public class DesktopFrame extends javax.swing.JFrame {
 
         iconNotePad.setText("Bloc de Notas");
 
+        iconWordpad.setText("WordPad");
+        iconWordpad.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconWordpadMouseDragged(evt);
+            }
+        });
+
         javax.swing.GroupLayout bodyDesktopLayout = new javax.swing.GroupLayout(bodyDesktop);
         bodyDesktop.setLayout(bodyDesktopLayout);
         bodyDesktopLayout.setHorizontalGroup(
@@ -465,7 +491,9 @@ public class DesktopFrame extends javax.swing.JFrame {
                                 .addComponent(iconCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(bodyDesktopLayout.createSequentialGroup()
                         .addComponent(iconReciclaje, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(145, 145, 145)))
+                        .addGap(69, 69, 69)
+                        .addComponent(iconWordpad)
+                        .addGap(11, 11, 11)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bodyDesktopLayout.setVerticalGroup(
@@ -487,7 +515,9 @@ public class DesktopFrame extends javax.swing.JFrame {
                         .addGap(252, 252, 252)
                         .addComponent(iconNotePad)))
                 .addGap(34, 34, 34)
-                .addComponent(iconReciclaje, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bodyDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(iconReciclaje, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iconWordpad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                 .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -570,6 +600,15 @@ public class DesktopFrame extends javax.swing.JFrame {
         iconCalculadora.setLocation(xDif, yDif);
     }//GEN-LAST:event_iconCalculadoraMouseDragged
 
+    private void iconWordpadMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconWordpadMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getX();
+        int y = evt.getY();
+        int xDif = iconWordpad.getLocation().x + x - iconWordpad.getWidth();
+        int yDif = iconWordpad.getLocation().y + y - iconWordpad.getHeight();
+        iconWordpad.setLocation(xDif, yDif);
+    }//GEN-LAST:event_iconWordpadMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -616,6 +655,7 @@ public class DesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel iconNotePad;
     private javax.swing.JLabel iconPaint;
     private javax.swing.JLabel iconReciclaje;
+    private javax.swing.JLabel iconWordpad;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel taskBar;
     // End of variables declaration//GEN-END:variables

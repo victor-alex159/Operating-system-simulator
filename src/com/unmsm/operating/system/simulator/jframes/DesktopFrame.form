@@ -69,7 +69,9 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="iconReciclaje" min="-2" pref="59" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="iconWordpad" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -100,7 +102,10 @@
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                  <Component id="iconReciclaje" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="iconReciclaje" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="iconWordpad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="227" max="32767" attributes="0"/>
                   <Component id="taskBar" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -239,6 +244,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Bloc de Notas"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="iconWordpad">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="WordPad"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="iconWordpadMouseDragged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
