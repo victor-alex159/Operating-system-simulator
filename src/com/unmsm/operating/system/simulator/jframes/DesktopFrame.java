@@ -36,7 +36,7 @@ import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 public class DesktopFrame extends javax.swing.JFrame {
 
     ExplorerFrame explorer = new ExplorerFrame();
-    ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
+    
     DrawFrame drawFrame = new DrawFrame();
     //PaintFrame paint = new PaintFrame();
     TresenRaya game1=new TresenRaya();
@@ -81,10 +81,11 @@ public class DesktopFrame extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
+                    ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
+                    reciclajeExplorer.getFile();
                     reciclajeExplorer.setVisible(true);
                     reciclajeExplorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
                     //explorer.setIsClosedReciclaje(true);
-                    reciclajeExplorer.getFile(true);
                 }
             }
             
@@ -101,6 +102,7 @@ public class DesktopFrame extends javax.swing.JFrame {
                     open.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
+                            ReciclajeFrame reciclajeExplorer = new ReciclajeFrame();
                             reciclajeExplorer.setVisible(true);
                             frame.setVisible(false);
                             reciclajeExplorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -127,9 +129,10 @@ public class DesktopFrame extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !e.isConsumed() && SwingUtilities.isLeftMouseButton(e)) {
-                    explorer.setVisible(true);
-                    explorer.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                    explorer.readFile(false);
+                    ExplorerFrame explorerWindows = new ExplorerFrame();
+                    explorerWindows.readFile(false);
+                    explorerWindows.setVisible(true);
+                    explorerWindows.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 }
             }
 

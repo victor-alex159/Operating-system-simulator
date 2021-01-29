@@ -30,11 +30,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
-
+import java.nio.file.Path;
 import com.unmsm.operating.system.simulator.model.Directory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Paths;
 import javax.swing.JOptionPane;
 
 public class ExplorerFrame extends javax.swing.JFrame {
@@ -45,6 +46,9 @@ public class ExplorerFrame extends javax.swing.JFrame {
     double newFileLocX = 0;
     double newFileLocY = 0;
     boolean isClosedReciclaje;
+    JFrame frameFolder = new JFrame();
+    boolean textField = false;
+    String nameFile = null;
     Notepad notePad = new Notepad();
     public ExplorerFrame() {
         initComponents();
@@ -64,7 +68,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
     
     public void explorer() {
         bodyExplorer.addMouseListener(new MouseAdapter() {
-            
+             
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(SwingUtilities.isRightMouseButton(e)) {
@@ -112,9 +116,17 @@ public class ExplorerFrame extends javax.swing.JFrame {
                                  public void mouseReleased(MouseEvent e) {
                                      if(SwingUtilities.isLeftMouseButton(e)) {
                                          try {
-                                            createFile(editText.getText(), "file");
-                                            addFile(editText.getText(), "file");
-                                             FileController fileController = new FileController();
+                                            frame.setVisible(false);
+                                            if(textField) {
+                                                createFile(nameFile, "file", editText.getText(), true);
+                                            }
+                                            if(editText.getText() != null) {
+                                                createFile(editText.getText(), "file", null, false);
+                                                textField = true;
+                                                //nameFile = editText.getText();
+                                            }
+                                            addIconToFile(editText.getText(), "file");
+                                            FileController fileController = new FileController();
                                              //fileController.createDirectory("carpeta1", "./docFiles");
                                              //fileController.createFile("archivo", "txt", "docFiles");
                                              //fileController.moveFileToRecicle(editText.getText());
@@ -129,6 +141,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                          }  
                      });
                     createFolder.addMouseListener(new MouseAdapter() {
+                        
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             JFrame frame = new JFrame();
@@ -145,12 +158,22 @@ public class ExplorerFrame extends javax.swing.JFrame {
                             frame.setVisible(true);
                             frame.setLocationRelativeTo(null);  
                             frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                            boolean directoryCreated = false;
                             saveNameFile.addMouseListener(new MouseAdapter() {
                                  @Override
                                  public void mouseReleased(MouseEvent e) {
                                      if(SwingUtilities.isLeftMouseButton(e)) {
                                          try {
-                                            createFile(editText.getText(), "folder");
+                                            frame.setVisible(false);
+                                            if(textField) {
+                                                createFile(nameFile, "folder", editText.getText(), true);
+                                                //nameFile = null;
+                                            }
+                                            if(editText.getText() != null && nameFile == null) {
+                                                textField = true;
+                                                nameFile = editText.getText();
+                                                createFile(editText.getText(), "folder", null, false);
+                                            }
                                              setIconFiles(editText.getText(), newFileLocX, newFileLocY, "folder", false);
                                              
                                         }catch(IOException ex) {
@@ -168,7 +191,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
         });
     }
     
-    public void createFile(String nameFile, String type) throws IOException {
+    public void createFile(String nameFile, String type, String name, boolean subDirectory) throws IOException {
         OutputStream output = null;
         OutputStreamWriter outWriter = null;
         Writer bufferWriter = null;
@@ -185,8 +208,19 @@ public class ExplorerFrame extends javax.swing.JFrame {
             if("folder".equals(type)) {
                 path = ("./docFiles/".concat(nameFile));
                 File directory = new File(path);
-                if(directory.mkdirs()) {
-                    JOptionPane.showMessageDialog(null, "Carpeta creada");
+                if(!subDirectory) {
+                    if(directory.mkdirs()) {
+                        JOptionPane.showMessageDialog(null, "Carpeta creada");
+                    }
+                }
+                if(name!=null && subDirectory) {
+                    Path pathSubiderctory = Paths.get(path);
+                    Path pathSubd = pathSubiderctory.toAbsolutePath();
+                    String pathS = pathSubd.toString().concat("/").concat(name);
+                    File subdirectory = new File(pathS);
+                    if(subdirectory.mkdirs()) {
+                        JOptionPane.showMessageDialog(null, "Carpeta creada");
+                    }
                 }
             }
             
@@ -213,7 +247,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
         
     }
     
-    public void addFile(String nameFile, String type) {
+    public void addIconToFile(String nameFile, String type) {
         Reader reader = null;
         BufferedReader bufferReader = null;
         String path = null;
@@ -274,6 +308,47 @@ public class ExplorerFrame extends javax.swing.JFrame {
     public void readFile(boolean clear) {
         String path = "./docFiles";
         File files = new File(path);
+        Path pathFile = Paths.get(path);
+        Path pathDirectory = pathFile.toAbsolutePath();
+        String pth = pathDirectory.toString();
+        directoryTextField.setText("/explorer");
+        double x = 0.0;
+        double y = 0.0; 
+        int cont = 0;
+        String[] listFiles;
+        listFiles = files.list();
+        if(listFiles != null || listFiles.length != 0) {
+            for (String listFile : listFiles) {
+                cont++;
+                if(cont%7 == 0) {
+                    x = 0.0;
+                    y = y + 0.2;
+                }
+                //ystem.out.println(listFile);
+                if(clear) {
+                    if(listFile.contains(".txt")) {
+                        setIconFiles(listFile, x, y, "file", true);
+                    }
+                    setIconFiles(listFile, x, y, "folder", true);
+                    
+                } else {
+                    if(listFile.contains(".txt")) {
+                        setIconFiles(listFile, x, y, "file", false);
+                    } else {
+                        setIconFiles(listFile, x, y, "folder", false);
+                    }      
+                }
+                x = x + 0.25;
+            }
+            newFileLocX = x;
+            newFileLocY = y;
+        }
+    }
+    
+    public void readDirectory(String nameFile, boolean clear) {
+        String path = "./docFiles/".concat(nameFile);
+        File files = new File(path);
+        directoryTextField.setText("/explorer/".concat(nameFile));
         double x = 0.0;
         double y = 0.0; 
         int cont = 0;
@@ -375,6 +450,26 @@ public class ExplorerFrame extends javax.swing.JFrame {
                         notePad.setVisible(true);
                         frame.setVisible(false);
                         notePad.setDefaultCloseOperation(HIDE_ON_CLOSE);   
+                    } else {
+                        ExplorerFrame explorerBefore = new ExplorerFrame();
+                        JPanel panelFolder = new JPanel();
+                        ExplorerFrame explorerFrame = new ExplorerFrame();
+                        explorerFrame.setVisible(true);
+                        frame.setVisible(false);
+                        explorerFrame.readDirectory(nameFile, false);
+                        explorerFrame.setLocationRelativeTo(null);
+                        explorerFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                    }
+                }
+            });
+            
+            backButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    if(SwingUtilities.isLeftMouseButton(e)) {
+                        ExplorerFrame explorerFrame = new ExplorerFrame();
+                        System.out.println("true");
+                        explorerFrame.setVisible(false);
                     }
                 }
             });
@@ -452,13 +547,14 @@ public class ExplorerFrame extends javax.swing.JFrame {
                         @Override
                         public void mouseReleased(MouseEvent e) {
                             if(SwingUtilities.isLeftMouseButton(e)) {
+                                frame.setVisible(false);
                                 FileController fileController = new FileController();
                                 fileController.moveFileToRecicle(nameFile);
                                 //setIsClosedReciclaje(true);
                                 icon.setIcon(null);
                                 icon.setText(null);
                                 icon.revalidate();
-                                
+
                             }
                         }
                     });
@@ -471,6 +567,21 @@ public class ExplorerFrame extends javax.swing.JFrame {
                                     notePad.setVisible(true);
                                     frame.setVisible(false);
                                     notePad.setDefaultCloseOperation(HIDE_ON_CLOSE); 
+                                } else {
+                                    JPanel panelFolder = new JPanel();
+                                    ExplorerFrame explorerFrame = new ExplorerFrame();
+                                    /*frameFolder.getContentPane().setSize(explorerFrame.getContentPane().getSize());
+                                    frameFolder.setSize(explorerFrame.getWidth(), explorerFrame.getHeight());
+                                    int width = explorerPanel.getSize().width;
+                                    int height = explorerPanel.getSize().height;
+                                    panelFolder.setMaximumSize(new Dimension(width, height));
+                                    frameFolder.setVisible(true);
+                                    frameFolder.setLocationRelativeTo(null);*/
+                                    explorerFrame.setVisible(true);
+                                    frame.setVisible(false);
+                                    explorerFrame.readDirectory(nameFile, false);
+                                    explorerFrame.setLocationRelativeTo(null);
+                                    explorerFrame.setDefaultCloseOperation(HIDE_ON_CLOSE); 
                                 }
                             }
                     });
@@ -478,6 +589,10 @@ public class ExplorerFrame extends javax.swing.JFrame {
             }
             
         });
+    }
+    
+    public void listFilesByName() {
+        
     }
     
     public void addImageIcon(String nameImageIcon, JLabel iconLabel, JPanel panelBody) {

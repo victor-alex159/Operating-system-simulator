@@ -31,17 +31,13 @@ public class ReciclajeFrame extends javax.swing.JFrame {
     }
     
     
-    public void getFile(boolean isClosedReciclaje) {
+    public void getFile() {
         String path = "./recicle";
         File files = new File(path);
         String[] listFiles;
         double x = 0.0;
         double y = 0.0; 
         int cont = 0;
-        if(isClosedReciclaje) {
-            listFiles = null;
-            setIconFiles("", x, y, true);
-        }
         listFiles = files.list();
         if(listFiles != null || listFiles.length != 0) {
             for (String listFileName : listFiles) {
