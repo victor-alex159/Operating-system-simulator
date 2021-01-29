@@ -62,47 +62,6 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaGua
 import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImprimir;
 
 
-/**
- *      EditorGui.java
- *      
- *      Copyright 2010 
- *      
- *      </br>
- * </br>     
- * </br>
- * <A HREF="http://frlx.wordpress.com">Frlx</A>
- * </br>
- * </br>
- *     This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
- *</br>      
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
- *      
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- *      MA 02110-1301, USA.
- * </br>     
- * </br>     
- * </br>     
- *  	
- *		Presenta la Interfaz Gr�fica de un editor de texto simple
- *  	
- *        
- *      @author frlx
- *      @version 1.0
- *      @since 1.6  
- *      @see JFileChooser 
- */	
-
-
-
-
     public class EditorGui //extends JFrame
    {
     	
@@ -176,13 +135,11 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       {
       
          ventana=new JFrame("Editor");
-         ventana.setIconImage(new ImageIcon(getClass().getResource("libro.png")).getImage());
+         ventana.setIconImage(new ImageIcon(this.getClass().getResource("libro.png")).getImage());
          ref=new OperacionesFichero();
          inicializaPaneles();
          inicializaComponentes();
-         
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setVisible(true);
+        ventana.setVisible(false);
         ventana.setSize(500,500);
          
          nombreFichero=ref.getPath();
@@ -199,7 +156,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
      
       public EditorGui(String directorio)
       {
-    	 ventana=new JFrame("Editor");
+    	 ventana=new JFrame("WordPad");
     	 ventana.setIconImage(new ImageIcon(getClass().getResource("libro.png")).getImage());
          ref=new OperacionesFichero();
          nombreFichero=directorio;
@@ -252,7 +209,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
        * */
       public void menuArchivo()
       {
-    	  jmiAbrir=new JMenuItem("Abrir",new ImageIcon(getClass().getResource("folder-horizontal-open.png")));
+    	  jmiAbrir=new JMenuItem("Abrir",new ImageIcon(this.getClass().getResource("folder-horizontal-open.png")));
     	  jmiAbrir.setBackground(new Color(176,196,222));
     	  jmiAbrir.addActionListener(new EscuchaAbrir());
     	  jmArchivo.add(jmiAbrir);
@@ -357,29 +314,29 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
     	  jbAbrir.setToolTipText("Abrir documento");
     	  jtbHerramientas.add(jbAbrir);
     	  
-    	  jbActualizar=new JButton(new ImageIcon(getClass().getResource("/iconos/arrow_refresh.png")));
+    	  jbActualizar=new JButton(new ImageIcon(getClass().getResource("arrow_refresh.png")));
           jbActualizar.addActionListener(new EscuchaActualizar());
           jbActualizar.setToolTipText("recargar documento sin guardar cambios");
           jtbHerramientas.add(jbActualizar);
           jtbHerramientas.addSeparator(new Dimension(10,25));                     
     	  
-          jbPdf=new JButton(new ImageIcon(getClass().getResource("/iconos/document-pdf.png")));
+          jbPdf=new JButton(new ImageIcon(getClass().getResource("document-pdf.png")));
           jbPdf.setToolTipText("Guardar en pdf");
           egPdf=new EscuchaGuardaPdf(this);
           jbPdf.addActionListener(egPdf);
           jtbHerramientas.add(jbPdf);
           
-    	  jbGuardar=new JButton(new ImageIcon(getClass().getResource("/iconos/disk.png")));
+    	  jbGuardar=new JButton(new ImageIcon(getClass().getResource("disk.png")));
     	  jbGuardar.addActionListener(new EscuchaGuardar());
     	  jbGuardar.setToolTipText("Guardar documento");
     	  jtbHerramientas.add(jbGuardar);
     	  
-    	  jbGuardarComo=new JButton(new ImageIcon(getClass().getResource("/iconos/drive_disk.png")));
+    	  jbGuardarComo=new JButton(new ImageIcon(getClass().getResource("drive_disk.png")));
           jbGuardarComo.addActionListener(new EscuchaGuardarComo());
           jbGuardarComo.setToolTipText("Guardar documento como");
           jtbHerramientas.add(jbGuardarComo);
           
-          jbImprimir=new JButton(new ImageIcon(getClass().getResource("/iconos/printer.png")));
+          jbImprimir=new JButton(new ImageIcon(getClass().getResource("printer.png")));
           jbImprimir.setToolTipText("Imprimir");
           eiImprimir=new EscuchaImprimir(this);
           jbImprimir.addActionListener(eiImprimir);
@@ -388,7 +345,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
          
           jtbHerramientas.addSeparator(new Dimension(10,25));
                   
-          jbReemplazar=new JButton(new ImageIcon(getClass().getResource("/iconos/textfield_rename.png")));
+          jbReemplazar=new JButton(new ImageIcon(getClass().getResource("textfield_rename.png")));
           jbReemplazar.addActionListener(new EscuchaReemplaza());
           jbReemplazar.setToolTipText("Reemplazar");
           
@@ -399,13 +356,13 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
 	      AlinearTexto b2=new AlinearTexto(2);
 	      AlinearTexto b3=new AlinearTexto(3);
                     
-          jbIzq=new JButton(new ImageIcon(getClass().getResource("/iconos/text_align_left.png")));
+          jbIzq=new JButton(new ImageIcon(getClass().getResource("text_align_left.png")));
           jbIzq.setToolTipText("Texto a la izquierda");
           
-	      jbCen=new JButton(new ImageIcon(getClass().getResource("/iconos/text_align_center.png")));
+	      jbCen=new JButton(new ImageIcon(getClass().getResource("text_align_center.png")));
 	      jbCen.setToolTipText("Centrar");
 	      
-	      jbDer=new JButton(new ImageIcon(getClass().getResource("/iconos/text_align_right.png")));
+	      jbDer=new JButton(new ImageIcon(getClass().getResource("text_align_right.png")));
 	      jbDer.setToolTipText("Texto a la derecha");
 	      
 	      jbIzq.addActionListener(b1);
@@ -416,24 +373,24 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
           jtbHerramientas.add(jbCen);
           jtbHerramientas.add(jbDer);
           
-          jbFuente=new JButton(new ImageIcon(getClass().getResource("/iconos/font.png")));
+          jbFuente=new JButton(new ImageIcon(getClass().getResource("font.png")));
           jbFuente.addActionListener(new EscuchaFuente());
           jbFuente.setToolTipText("Tamaño y tipo de letra");
           
           jtbHerramientas.add(jbFuente);
           jtbHerramientas.addSeparator(new Dimension(10,25));
           
-          jbCopiar=new JButton(new ImageIcon(getClass().getResource("/iconos/page_2_copy.png")));
+          jbCopiar=new JButton(new ImageIcon(getClass().getResource("page_2_copy.png")));
           jbCopiar.addActionListener(new EscuchaCopia());
           jbCopiar.setToolTipText("Copiar");
           jtbHerramientas.add(jbCopiar);
           
-          jbPegar=new JButton(new ImageIcon(getClass().getResource("/iconos/broom.png")));
+          jbPegar=new JButton(new ImageIcon(getClass().getResource("broom.png")));
           jbPegar.addActionListener(new EscuchaPega());
           jbPegar.setToolTipText("Pegar");          
           jtbHerramientas.add(jbPegar);
           
-          jbCortar=new JButton(new ImageIcon(getClass().getResource("/iconos/cut.png")));
+          jbCortar=new JButton(new ImageIcon(getClass().getResource("cut.png")));
           jbCortar.addActionListener(new EscuchaCorta());
           jbCortar.setToolTipText("Cortar");
           jtbHerramientas.add(jbCortar);
@@ -837,7 +794,7 @@ import com.unmsm.operating.system.simulator.apps.wordpad.escuchadores.EscuchaImp
       {
     	  public void actionPerformed(ActionEvent e)
     	  {
-    		  new AcercaDeEditor();
+              
     	  }
       }
               
