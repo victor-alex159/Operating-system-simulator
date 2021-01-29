@@ -21,30 +21,49 @@ import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 public class ReciclajeFrame extends javax.swing.JFrame {
 
+    double newFileLocX = 0;
+    double newFileLocY = 0;
+    ExplorerFrame explorer = new ExplorerFrame();
     public ReciclajeFrame() {
         initComponents();
-        getFile();
+        this.setLocationRelativeTo(null);
+        //getFile(false);
     }
     
     
-    public void getFile() {
+    public void getFile(boolean isClosedReciclaje) {
         String path = "./recicle";
         File files = new File(path);
-        String[] listFiles =  listFiles = files.list();
-        
+        String[] listFiles;
+        double x = 0.0;
+        double y = 0.0; 
+        int cont = 0;
+        if(isClosedReciclaje) {
+            listFiles = null;
+            setIconFiles("", x, y, true);
+        }
+        listFiles = files.list();
         if(listFiles != null || listFiles.length != 0) {
-            for (String listFile : listFiles) {
+            for (String listFileName : listFiles) {
+                cont++;
+                if(cont%7 == 0) {
+                    x = 0.0;
+                    y = y + 0.2;
+                }
                 //ystem.out.println(listFile);
-                setIconFiles(listFile);
+                setIconFiles(listFileName, x, y, false);
+                x = x + 0.25;
             }
+            newFileLocX = x;
+            newFileLocY = y;
         }
     }
     
-    public void setIconFiles(String nameFile) {
+    public void setIconFiles(String nameFile, double x, double y,  boolean clear) {
         int size = 400;
         JPanel panel = bodyReciclaje;
         JLabel icon = new JLabel(nameFile);
-        icon.setLocation((int)(size * Math.random()), (int)(size * Math.random()));
+        icon.setLocation((int)(size * x), (int)(size * y));
         icon.setSize(new Dimension(100, 100));
         addImageIcon("iconDoc.png", icon, panel);
         icon.addMouseMotionListener(new MouseMotionAdapter() {
@@ -75,6 +94,7 @@ public class ReciclajeFrame extends javax.swing.JFrame {
                     frame.getContentPane().add(panel);
                     frame.setSize(250, 150);
                     frame.setVisible(true);
+                    frame.setLocationRelativeTo(null);  
                     frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
                     
                     delete.addMouseListener(new MouseAdapter() {
@@ -91,6 +111,11 @@ public class ReciclajeFrame extends javax.swing.JFrame {
             }
             
         });
+        if(clear) {
+            icon.setIcon(null);
+            icon.setText(null);
+            icon.revalidate();
+        }
     }
     
     

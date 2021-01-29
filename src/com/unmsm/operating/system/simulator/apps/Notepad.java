@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -29,6 +31,7 @@ public class Notepad extends javax.swing.JFrame {
     
     public Notepad() {
         initComponents();
+        this.setLocationRelativeTo(null);
         newFile();
         about();
         openFile();
@@ -102,6 +105,23 @@ public class Notepad extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Solo archivos en formato de texto!!");
                 e.printStackTrace();
             }
+        }
+    }
+    
+    public void openWithData(String ruta) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt");
+        fileChooser.setFileFilter(filter);
+        List<String> lines;
+        textArea.setText("");
+        try {
+            lines = Files.readAllLines(Paths.get(ruta));
+            lines.forEach(line -> {
+                textArea.append(line+"\n");
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

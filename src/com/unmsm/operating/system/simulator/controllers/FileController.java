@@ -138,12 +138,16 @@ public class FileController {
     }
     
     public void moveFileToRecicle(String nameFile) {
+        boolean success = false;
+        if(nameFile.contains(".txt")) {
+            nameFile = nameFile.replaceAll(".txt", "");
+        }
         String pathFile = ("./docFiles/".concat(nameFile).concat(".txt"));
         String pathRecicle = "./recicle";
         File file = new File(pathFile);
         File directoryRecicle = new File(pathRecicle);
         
-        boolean success = file.renameTo(new File(directoryRecicle, file.getName()));
+        success = file.renameTo(new File(directoryRecicle, file.getName()));
         if(!success) {
             JOptionPane.showMessageDialog(null, "Error al mover a directorio de Reciclaje");
         }

@@ -1,6 +1,7 @@
 
 package com.unmsm.operating.system.simulator.jframes;
 
+import com.unmsm.operating.system.simulator.apps.Notepad;
 import com.unmsm.operating.system.simulator.controllers.FileController;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,15 +32,34 @@ import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 import com.unmsm.operating.system.simulator.model.Directory;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class ExplorerFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form ExplorerFrame
      */
+    double newFileLocX = 0;
+    double newFileLocY = 0;
+    boolean isClosedReciclaje;
+    Notepad notePad = new Notepad();
     public ExplorerFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         explorer();
+        search();
+        //readFile();
+    }
+
+    public boolean isIsClosedReciclaje() {
+        return isClosedReciclaje;
+    }
+
+    public void setIsClosedReciclaje(boolean isClosedReciclaje) {
+        this.isClosedReciclaje = isClosedReciclaje;
     }
     
     public void explorer() {
@@ -54,6 +74,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                     JButton open = new JButton("abir");
                     JButton delete = new JButton("eliminar");
                     JButton copy = new JButton("copiar");
+                    JButton createFolder = new JButton("crear carpeta");
                     panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                     panel.setPreferredSize(new Dimension(100, 100));
                     panel.setMaximumSize(new Dimension(100, 100));
@@ -61,11 +82,13 @@ public class ExplorerFrame extends javax.swing.JFrame {
                     panel.add(open);
                     panel.add(delete);
                     panel.add(copy);
+                    panel.add(createFolder);
                     frame.getContentPane().add(panel);
                     frame.setSize(250, 150);
                     frame.setVisible(true);
+                    frame.setLocationRelativeTo(null);  
                     frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                    
+                     
                     create.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -81,6 +104,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                             frame.getContentPane().add(panel);
                             frame.setSize(250, 150);
                             frame.setVisible(true);
+                            frame.setLocationRelativeTo(null);  
                             frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 
                             saveNameFile.addMouseListener(new MouseAdapter() {
@@ -88,13 +112,12 @@ public class ExplorerFrame extends javax.swing.JFrame {
                                  public void mouseReleased(MouseEvent e) {
                                      if(SwingUtilities.isLeftMouseButton(e)) {
                                          try {
-                                            createFile(editText.getText());
-                                            addFile(editText.getText());
+                                            createFile(editText.getText(), "file");
+                                            addFile(editText.getText(), "file");
                                              FileController fileController = new FileController();
                                              //fileController.createDirectory("carpeta1", "./docFiles");
                                              //fileController.createFile("archivo", "txt", "docFiles");
                                              //fileController.moveFileToRecicle(editText.getText());
-                                             
                                              
                                              
                                         }catch(IOException ex) {
@@ -102,27 +125,70 @@ public class ExplorerFrame extends javax.swing.JFrame {
                                         }
                                      }
                                  }
-                            });   
+                            });
                          }  
                      });
+                    createFolder.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            JFrame frame = new JFrame();
+                            JPanel panel = new JPanel();
+                            JTextField editText = new JTextField(8);
+                            JButton saveNameFile = new JButton("Guardar");
+                            panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                            panel.setPreferredSize(new Dimension(100, 100));
+                            panel.setMaximumSize(new Dimension(100, 100));
+                            panel.add(editText);
+                            panel.add(saveNameFile);
+                            frame.getContentPane().add(panel);
+                            frame.setSize(250, 150);
+                            frame.setVisible(true);
+                            frame.setLocationRelativeTo(null);  
+                            frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                            saveNameFile.addMouseListener(new MouseAdapter() {
+                                 @Override
+                                 public void mouseReleased(MouseEvent e) {
+                                     if(SwingUtilities.isLeftMouseButton(e)) {
+                                         try {
+                                            createFile(editText.getText(), "folder");
+                                             setIconFiles(editText.getText(), newFileLocX, newFileLocY, "folder", false);
+                                             
+                                        }catch(IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                     }
+                                 }
+                            }); 
+                        }
+                    
+                    });
                 }
             }
         
         });
     }
     
-    public void createFile(String nameFile) throws IOException {
+    public void createFile(String nameFile, String type) throws IOException {
         OutputStream output = null;
         OutputStreamWriter outWriter = null;
         Writer bufferWriter = null;
-        String path = ("./docFiles/".concat(nameFile).concat(".txt"));
-        
+        String path = "";
         try {
-            output = new FileOutputStream(path);
-            outWriter = new OutputStreamWriter(output);
-            bufferWriter = new BufferedWriter(outWriter);
-            bufferWriter.write("HolaMundo");
-            bufferWriter.flush();
+            if("file".equals(type)) {
+                path = ("./docFiles/".concat(nameFile).concat(".txt"));        
+                output = new FileOutputStream(path);
+                outWriter = new OutputStreamWriter(output);
+                bufferWriter = new BufferedWriter(outWriter);
+                bufferWriter.write("HolaMundo");
+                bufferWriter.flush();
+            }
+            if("folder".equals(type)) {
+                path = ("./docFiles/".concat(nameFile));
+                File directory = new File(path);
+                if(directory.mkdirs()) {
+                    JOptionPane.showMessageDialog(null, "Carpeta creada");
+                }
+            }
             
             
         } catch(IOException err) {
@@ -147,22 +213,27 @@ public class ExplorerFrame extends javax.swing.JFrame {
         
     }
     
-    public void addFile(String nameFile) {
+    public void addFile(String nameFile, String type) {
         Reader reader = null;
         BufferedReader bufferReader = null;
-        String path = ("./docFiles/".concat(nameFile).concat(".txt"));
+        String path = null;
         boolean existFile = false;
         try {
-            reader = new FileReader(path);
-            bufferReader = new BufferedReader(reader);
-            int data = bufferReader.read();
+            if("file".equals(type)){
+                path = ("./docFiles/".concat(nameFile).concat(".txt"));
+                reader = new FileReader(path);
+                bufferReader = new BufferedReader(reader);
+                double c = 0.0;
+                double d = 0.1; 
+                int data = bufferReader.read();
                 while(data != -1) {
                     data = bufferReader.read();
                     existFile = true;
                 }
                 if(existFile) {
-                    setIconFiles(nameFile);
+                    setIconFiles(nameFile, newFileLocX, newFileLocY, type, false);
                 }
+            }
             
         } catch(IOException err) {
             err.printStackTrace();
@@ -200,17 +271,145 @@ public class ExplorerFrame extends javax.swing.JFrame {
         }
     }
     
-    public void readFile() {
+    public void readFile(boolean clear) {
+        String path = "./docFiles";
+        File files = new File(path);
+        double x = 0.0;
+        double y = 0.0; 
+        int cont = 0;
+        String[] listFiles;
+        listFiles = files.list();
+        if(listFiles != null || listFiles.length != 0) {
+            for (String listFile : listFiles) {
+                cont++;
+                if(cont%7 == 0) {
+                    x = 0.0;
+                    y = y + 0.2;
+                }
+                //ystem.out.println(listFile);
+                if(clear) {
+                    if(listFile.contains(".txt")) {
+                        setIconFiles(listFile, x, y, "file", true);
+                    }
+                    setIconFiles(listFile, x, y, "folder", true);
+                    
+                } else {
+                    if(listFile.contains(".txt")) {
+                        setIconFiles(listFile, x, y, "file", false);
+                    } else {
+                        setIconFiles(listFile, x, y, "folder", false);
+                    }      
+                }
+                x = x + 0.25;
+            }
+            newFileLocX = x;
+            newFileLocY = y;
+        }
+    }
+    
+    public String searchFile(String name) {
+        String path = "./docFiles";
+        String nameFile = null;
+        File files = new File(path);
+        double x = 0.0;
+        double y = 0.0; 
+        int cont = 0;
+        String[] listFiles;
+        listFiles = files.list();
+        if(listFiles != null || listFiles.length != 0) {
+            for (String listFile : listFiles) {           
+                if(listFile.contains(".txt")) {
+                    listFile = listFile.replaceAll(".txt", "");
+                    if(name.equals(listFile)) {
+                        nameFile = name.concat(".txt");
+                    }
+                } else {
+                    if(name.equals(listFile)) {
+                        nameFile = name;
+                    }
+                }
+            }
+            return nameFile;
+        }
+        return nameFile;
+    }
+    
+    public void searchFileByName(String name) {
+        String nameFile = searchFile(name);
+        System.out.println(nameFile);
+        if(nameFile != null) {
+            double x = 0.0;
+            double y = 0.0;
+            int size = 400;
+            JFrame frame = new JFrame();
+            JPanel panel = new JPanel();
+            JButton openFile = new JButton("Abrir");
+            JButton copyFile = new JButton("copiar");
+            JButton deleteFile = new JButton("eliminar");
+            JLabel icon = new JLabel(nameFile);
+            icon.setLocation((int)(size * x), (int)(size * y));
+            icon.setSize(new Dimension(100, 100));
+            if(nameFile.contains(".txt")) {
+                addImageIcon("iconDoc.png", icon, panel);            
+            } else {
+                addImageIcon("iconFolder.png", icon, panel);
+            }
+            panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.setPreferredSize(new Dimension(100, 100));
+            panel.setMaximumSize(new Dimension(100, 100));
+            panel.add(openFile);
+            panel.add(copyFile);
+            panel.add(deleteFile);
+            frame.getContentPane().add(panel);
+            frame.setSize(250, 150);
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);  
+            frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            
+            openFile.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(nameFile.contains(".txt")) {
+                        String path = ("./docFiles/".concat(nameFile));
+                        notePad.openWithData(path);
+                        notePad.setVisible(true);
+                        frame.setVisible(false);
+                        notePad.setDefaultCloseOperation(HIDE_ON_CLOSE);   
+                    }
+                }
+            });
+            
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "El archivo no existe");
+        }
+        
         
     }
     
-    public void setIconFiles(String nameFile) {
+    public void search() {
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String valueSearch = searchTextField.getText();
+                searchFileByName(valueSearch);
+            }
+        });
+    }
+    
+    public void setIconFiles(String nameFile, double x, double y, String type, boolean clear) {
         int size = 400;
         JPanel panel = bodyExplorer;
         JLabel icon = new JLabel(nameFile);
-        icon.setLocation((int)(size * Math.random()), (int)(size * Math.random()));
+        icon.setLocation((int)(size * x), (int)(size * y));
         icon.setSize(new Dimension(100, 100));
-        addImageIcon("iconDoc.png", icon, panel);
+        if("file".equals(type)) {
+            addImageIcon("iconDoc.png", icon, panel);            
+        }
+        if("folder".equals(type)) {
+            addImageIcon("iconFolder.png", icon, panel);
+        }
         icon.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -221,6 +420,11 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 icon.setLocation(xDif, yDif);
             }
         });
+        if(clear) {
+            icon.setIcon(null);
+            icon.setText(null);
+            icon.revalidate();
+        }
         
         icon.addMouseListener(new MouseAdapter() {
             
@@ -229,16 +433,19 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 if(SwingUtilities.isRightMouseButton(e)) {
                     JFrame frame = new JFrame();
                     JPanel panel = new JPanel();
+                    JButton openFile = new JButton("abrir");
                     JButton delete = new JButton("eliminar");
                     JButton copy = new JButton("copiar");
                     panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                     panel.setPreferredSize(new Dimension(100, 100));
                     panel.setMaximumSize(new Dimension(100, 100));
+                    panel.add(openFile);
                     panel.add(delete);
                     panel.add(copy);
                     frame.getContentPane().add(panel);
                     frame.setSize(250, 150);
                     frame.setVisible(true);
+                    frame.setLocationRelativeTo(null);  
                     frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
                     
                     delete.addMouseListener(new MouseAdapter() {
@@ -247,9 +454,25 @@ public class ExplorerFrame extends javax.swing.JFrame {
                             if(SwingUtilities.isLeftMouseButton(e)) {
                                 FileController fileController = new FileController();
                                 fileController.moveFileToRecicle(nameFile);
+                                //setIsClosedReciclaje(true);
+                                icon.setIcon(null);
+                                icon.setText(null);
+                                icon.revalidate();
                                 
                             }
                         }
+                    });
+                    openFile.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                if(nameFile.contains(".txt")) {
+                                    String path = ("./docFiles/".concat(nameFile));
+                                    notePad.openWithData(path);
+                                    notePad.setVisible(true);
+                                    frame.setVisible(false);
+                                    notePad.setDefaultCloseOperation(HIDE_ON_CLOSE); 
+                                }
+                            }
                     });
                 }
             }
@@ -279,7 +502,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
         sideBar = new javax.swing.JPanel();
         headerExplorer = new javax.swing.JPanel();
         searchTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        searchButton = new javax.swing.JButton();
         directoryTextField = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -303,7 +526,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
 
         headerExplorer.setBackground(new java.awt.Color(204, 204, 204));
 
-        jButton1.setText("Buscar");
+        searchButton.setText("Buscar");
 
         backButton.setText("Atras");
 
@@ -323,7 +546,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(searchButton)
                 .addGap(8, 8, 8))
         );
         headerExplorerLayout.setVerticalGroup(
@@ -331,7 +554,7 @@ public class ExplorerFrame extends javax.swing.JFrame {
             .addGroup(headerExplorerLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(headerExplorerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(directoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -430,8 +653,8 @@ public class ExplorerFrame extends javax.swing.JFrame {
     private javax.swing.JTextField directoryTextField;
     private javax.swing.JPanel explorerPanel;
     private javax.swing.JPanel headerExplorer;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JPanel sideBar;
     // End of variables declaration//GEN-END:variables

@@ -17,6 +17,7 @@ public class Calculadora extends javax.swing.JFrame {
     String operator;
     public Calculadora() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
